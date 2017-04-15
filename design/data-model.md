@@ -27,7 +27,7 @@ An item a player ordered while playing.
 * GUID - playerId
 * String name
 * Double price
-* DateTime orderedOn
+* DateTime orderDate
 
 ## Table ##
 
@@ -67,4 +67,4 @@ A record of a moved table
 * GUID - Id
 * GUID - tableSource
 * GUID - tableDestination
-* DateTime - happenedOn
+* DateTime - date
