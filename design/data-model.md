@@ -8,6 +8,7 @@ The model that hold every entity together - the gaming event
 * Table[] tables
 * Player[] Players
 * Double hourlyRate
+* TableMovement[] movements - The table movements that happened during the event
 * DateTime start
 * DateTime? end
 
@@ -43,7 +44,7 @@ An item a player ordered while playing.
 
 An enum of the table's move status
 
-Values:
+### Values:
 
 * Null - The table was not a part of a table change
 * Source
