@@ -89,6 +89,7 @@ This screen will contain an overview of the event.
 ### This screen will show:
 
 * The table's name
+* The table's hourly rate
 * The total time of the table 
 * The total price of the table right now.
 * The player's currently playing on the table and how much money each needs to pay for his time on the table
