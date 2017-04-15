@@ -1,6 +1,12 @@
+system-config.js*
 typings
-app/**/*.js
-app/**/*.map
+project/src/app/**/*.js
+project/src/app/**/*.map
+project/src/main.js
+project/src/main.js.map
 node_modules
 jspm_packages
 bower_components
+aot/*
+dist/*
+yarn.lock
