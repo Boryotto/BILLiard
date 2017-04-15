@@ -6,6 +6,6 @@ export class MiscItem {
         public name: string,
         public player: Player,
         public price: number,
-        public orderedOn: Date
+        public orderDate: Date
     ) { }
 } 
