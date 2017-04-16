@@ -1,5 +1,7 @@
 import { Routes } from "@angular/router"
-import { AppComponent } from "./app.component"
+import { EventComponent } from "./event/event.component"
 
 export const appRoutes: Routes = [
+    { path: 'event/:id', component: EventComponent },
+    { path: '**', redirectTo: '' }
 ];
