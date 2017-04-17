@@ -10,3 +10,4 @@ bower_components
 aot/*
 dist/*
 yarn.lock
+project/*.log
