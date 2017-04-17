@@ -16,7 +16,7 @@ The model that hold every entity together - the gaming event
 
 * GUID - Id
 * String name
-* TableRecord[] records - The player's table playing records
+<!--* TableRecord[] records - The player's table playing records-->
 * MiscItem[] miscItems - The items the player had ordered while playing.
 
 ## MiscItem ##
@@ -35,7 +35,7 @@ An item a player ordered while playing.
 * Double hourlyRate
 * DateTime start - The date that the table was rented
 * DateTime? end
-* TableRecord[] records - The table records of this table
+<!--* TableRecord[] records - The table records of this table-->
 * Boolean - isOpen
 * TableMoveStatus - moveStatus
 
