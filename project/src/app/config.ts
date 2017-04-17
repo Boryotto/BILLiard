@@ -1,9 +1,9 @@
-export const config: object = {
+export const config: Object = {
     GuidLength: 10,
 
 };
 
-export const colorPallete: object = {
+export const colorPallete: Object = {
     primary: '#2196F3',
     primary_dark: '#1976D2',
     primary_light: '#BBDEFB',

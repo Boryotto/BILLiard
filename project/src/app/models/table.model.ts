@@ -9,7 +9,7 @@ export class Table {
         public start: Date,
         public end: Date,
         public records: TableRecord[],
-        isOpen: boolean,
-        moveStatus: TableMoveStatus
+        public isOpen: boolean,
+        public moveStatus: TableMoveStatus
     ) { }
 }
