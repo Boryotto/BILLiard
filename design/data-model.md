@@ -9,6 +9,7 @@ The model that hold every entity together - the gaming event
 * Player[] Players
 * Double hourlyRate
 * TableMovement[] movements - The table movements that happened during the event
+* TableRecord[] records - The table records that happend during the event
 * DateTime start
 * DateTime? end
 
