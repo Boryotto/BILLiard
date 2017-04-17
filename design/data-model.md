@@ -24,7 +24,6 @@ The model that hold every entity together - the gaming event
 An item a player ordered while playing.
 
 * GUID - Id
-* GUID - playerId
 * String name
 * Double price
 * DateTime orderDate
