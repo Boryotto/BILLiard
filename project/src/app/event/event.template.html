@@ -20,7 +20,7 @@
       <span *ngIf="table.isOpen">
         <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
       <h4 class="table-timer">
-        <timer [interval]=1000 [start]="table.start"></timer>
+        <timer [interval]=1000 [start]="table.start" [difference]=true></timer>
       </h4>
       </span>
     </a>

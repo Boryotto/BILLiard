@@ -9,10 +9,15 @@ export class TimerComponent implements OnInit {
 
     @Input() private start: Date;
     @Input() private interval: number;
+    @Input() private difference: boolean;
+
     private currentDate: Date;
 
     ngOnInit(): void {
         this.currentDate = this.start;
+        if (this.difference) {
+            this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
+        }
         setInterval(() => {
             this.currentDate.setTime(this.currentDate.getTime() + this.interval);
         }, this.interval);
