@@ -1,8 +1,28 @@
- <div id="event-jumbotron" class="jumbotron">
+<div id="event-jumbotron" class="jumbotron">
   <div class="container">
     <h1 id="event-title">
-        Game Event<br>
-        <small id="event-subtitle">Friday, 21/04/17</small>
+      {{event.name}}<br>
+      <small id="event-subtitle">Friday, 21/04/17</small>
+      <!--<small id="event-subtitle">{{event.start.getDay()}}, {{ event.start.getDate() }}/{{event.start.getMonth()}}/{{event.start.getFullYear()}}</small>-->
     </h1>
   </div>
 </div>
+<section id="tables-view">
+  <h3>Tables</h3>
+  <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
+  <div class="list-group">
+    <a href="#" class="list-group-item" *ngFor="let table of event.tables">
+      <img src="../../assets/vectors/billiard.svg" alt="" class="list-icon">
+      <h4 class="table-name list-group-item-heading">{{ table.name }}</h4>
+      <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
+      <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
+
+      <span *ngIf="table.isOpen">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+      <h4 class="table-timer">
+        <timer [interval]=1000 [start]="table.start"></timer>
+      </h4>
+      </span>
+    </a>
+  </div>
+</section>

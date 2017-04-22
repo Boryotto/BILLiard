@@ -6,6 +6,8 @@ import { appRoutes } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { EventComponent } from './event/event.component';
+import { LocalDataStorerService } from "./services/storage/local-data-storer.service";
+import { TimerComponent } from "./timer/timer.component";
 
 @NgModule({
   imports: [
@@ -14,7 +16,12 @@ import { EventComponent } from './event/event.component';
   ],
   declarations: [
     AppComponent,
-    EventComponent],
-  bootstrap: [AppComponent]
+    EventComponent,
+    TimerComponent
+  ],
+  bootstrap: [AppComponent],
+  providers: [
+    LocalDataStorerService
+  ]
 })
 export class AppModule { }

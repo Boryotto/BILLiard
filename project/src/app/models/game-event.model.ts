@@ -7,6 +7,7 @@ export class GameEvent {
 
     public constructor(
         public Id: number,
+        public name: string,
         public tables: Table[],
         public players: Player[],
         public hourlyRate: number,
