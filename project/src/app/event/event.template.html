@@ -2,7 +2,7 @@
   <div class="container">
     <h1 id="event-title">
       {{event.name}}<br>
-      <small id="event-subtitle">Friday, 21/04/17</small>
+      <small id="event-subtitle">{{ event.start | date:"EEEE, d/M/y"}}</small>
       <!--<small id="event-subtitle">{{event.start.getDay()}}, {{ event.start.getDate() }}/{{event.start.getMonth()}}/{{event.start.getFullYear()}}</small>-->
     </h1>
   </div>
@@ -11,17 +11,21 @@
   <h3>Tables</h3>
   <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
   <div class="list-group">
-    <a href="#" class="list-group-item" *ngFor="let table of event.tables">
-      <img src="../../assets/vectors/billiard.svg" alt="" class="list-icon">
+    <a class="table-list-item list-group-item" *ngFor="let table of event.tables">
+      <img src="../../assets/vectors/billiard.svg" class="list-icon">
       <h4 class="table-name list-group-item-heading">{{ table.name }}</h4>
+      <span class="glyphicon glyphicon-new-window"></span>
+      <br>
       <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
       <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
 
+      <span>
+      <img src="../../assets/vectors/coins.svg" class="list-icon">
+        {{ calculateTableBill(table) | currency:currencyISOCode:true:'1.0-2' }}
+      </span>
       <span *ngIf="table.isOpen">
-        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-      <h4 class="table-timer">
-        <timer [interval]=1000 [start]="table.start" [difference]=true></timer>
-      </h4>
+      <img src="../../assets/vectors/clock.svg" class="list-icon">
+      <timer [interval]=1000 [start]="table.start" [difference]=true></timer>
       </span>
     </a>
   </div>

@@ -9,6 +9,7 @@ import { Table } from "../models/table.model";
 import { TableMoveStatus } from "../models/table-move-status.enum";
 import { TableMovement } from "../models/table-movement.model";
 import { TableRecord } from "../models/table-record.model";
+import { config } from '../config';
 
 @Component({
   selector: 'event',
@@ -19,6 +20,7 @@ export class EventComponent implements OnInit {
 
   private eventId: number; // The event's Id
   private event: GameEvent;
+  private currencyISOCode: string = config.currencyISOCode;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +35,8 @@ export class EventComponent implements OnInit {
 
     let eventName = "New Event";
     let tables: Table[] = [
-      new Table(1003, 'Table 23', 56.90, new Date(2017, 4, 22, 23, 0, 0, 0), null, true, TableMoveStatus.NULL),
-      new Table(1003, 'Table 53', 56.90, new Date(2017, 4, 22, 23, 0, 0, 0), null, false, TableMoveStatus.NULL)
+      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 22, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
+      new Table(1003, 'Table 53', 56.90, new Date(2017, 3, 22, 22, 0, 0, 0), null, false, TableMoveStatus.NULL)
     ];
     let players: Player[] = [new Player(50069, 'Mor Koshokaro', [])];
     let movements: TableMovement[] = [];
@@ -42,5 +44,8 @@ export class EventComponent implements OnInit {
     this.event = new GameEvent(1030, eventName, tables, players, NaN, movements, tableRecords, new Date(), null);
   }
 
-
+  public calculateTableBill(table: Table): number {
+    let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
+    return (leaseTimeMillis / 3600000) * table.hourlyRate;
+  }
 }

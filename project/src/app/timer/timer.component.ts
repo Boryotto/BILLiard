@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'timer',
-    template: '{{ pad(currentDate.getHours(), 2) }}:{{ pad(currentDate.getMinutes(), 2)}}:{{ pad(currentDate.getSeconds(),2)}}',
+    template: '{{ currentDate | date:"HH:mm:ss" }}'
 })
 export class TimerComponent implements OnInit {
 
@@ -14,22 +14,14 @@ export class TimerComponent implements OnInit {
     private currentDate: Date;
 
     ngOnInit(): void {
-        this.currentDate = this.start;
+        this.currentDate = new Date(this.start);
         if (this.difference) {
             this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
+            console.log(this.currentDate.getTime());
         }
         setInterval(() => {
             this.currentDate.setTime(this.currentDate.getTime() + this.interval);
         }, this.interval);
-    }
 
-    private pad(num: number, length: number): string {
-        let result: string = num.toString();
-        if (result.length < length) {
-            for (let i = 0; i < length - result.length; i++) {
-                result = '0' + result;
-            }
-        }
-        return result;
     }
 }

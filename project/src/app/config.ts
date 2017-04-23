@@ -1,6 +1,6 @@
-export const config: Object = {
-    GuidLength: 10,
-
+export const config: any = {
+    guidLength: 10,
+    currencyISOCode: 'USD'
 };
 
 export const colorPallete: Object = {
