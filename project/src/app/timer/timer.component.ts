@@ -17,10 +17,9 @@ export class TimerComponent implements OnInit {
         this.currentDate = new Date(this.start);
         if (this.difference) {
             this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
-            console.log(this.currentDate.getTime());
         }
         setInterval(() => {
-            this.currentDate.setTime(this.currentDate.getTime() + this.interval);
+            this.currentDate = new Date(this.currentDate.getTime() + this.interval);
         }, this.interval);
 
     }

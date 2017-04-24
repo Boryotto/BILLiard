@@ -1,6 +1,6 @@
 export const config: any = {
     guidLength: 10,
-    currencyISOCode: 'USD'
+    currencyISOCode: 'ILS'
 };
 
 export const colorPallete: Object = {

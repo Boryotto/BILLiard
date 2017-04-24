@@ -21,7 +21,7 @@
 
       <span>
       <img src="../../assets/vectors/coins.svg" class="list-icon">
-        {{ calculateTableBill(table) | currency:currencyISOCode:true:'1.0-2' }}
+        <bill [interval]=1000 [table]=table ></bill>
       </span>
       <span *ngIf="table.isOpen">
       <img src="../../assets/vectors/clock.svg" class="list-icon">
