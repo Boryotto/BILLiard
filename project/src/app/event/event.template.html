@@ -27,6 +27,8 @@
       <img src="../../assets/vectors/clock.svg" class="list-icon">
       <timer [interval]=1000 [start]="table.start" [difference]=true></timer>
       </span>
+      <img src="../../assets/vectors/player.svg" class="list-icon">
+      <span> {{ calculatePlayersOnTable(table) }}</span>
     </a>
   </div>
 </section>

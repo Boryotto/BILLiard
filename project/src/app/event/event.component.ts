@@ -35,17 +35,16 @@ export class EventComponent implements OnInit {
 
     let eventName = "New Event";
     let tables: Table[] = [
-      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 22, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
-      new Table(1003, 'Table 53', 56.90, new Date(2017, 3, 22, 22, 0, 0, 0), null, false, TableMoveStatus.NULL)
+      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 24, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
+      new Table(1003, 'Table 53', 56.90, new Date(2017, 3, 24, 22, 0, 0, 0), null, false, TableMoveStatus.NULL)
     ];
     let players: Player[] = [new Player(50069, 'Mor Koshokaro', [])];
     let movements: TableMovement[] = [];
-    let tableRecords: TableRecord[] = []
+    let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 24, 22, 0, 0, 0), null)]
     this.event = new GameEvent(1030, eventName, tables, players, NaN, movements, tableRecords, new Date(), null);
   }
 
-  public calculateTableBill(table: Table): number {
-    let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
-    return (leaseTimeMillis / 3600000) * table.hourlyRate;
+  private calculatePlayersOnTable(table: Table) {
+    return this.event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table === table).length;
   }
-}
+} 
