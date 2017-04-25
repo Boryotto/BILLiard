@@ -44,6 +44,9 @@ export class BillDisplayerComponent implements OnInit {
     }
 
     private calculateTableBill(table: Table): number {
+        if (table.start == undefined) {
+            return 0;
+        }
         let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
         return (leaseTimeMillis / 3600000) * table.hourlyRate;
     }
