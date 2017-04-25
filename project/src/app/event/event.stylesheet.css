@@ -40,3 +40,8 @@
 .table-link {
     float: right;
 }
+
+.players-list, .tables-list {
+    max-height: 40vh;
+    overflow: scroll;
+}
