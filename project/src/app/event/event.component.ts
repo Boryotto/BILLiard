@@ -47,4 +47,9 @@ export class EventComponent implements OnInit {
   private calculatePlayersOnTable(table: Table) {
     return this.event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table.Id === table.Id && tableRecord.end == undefined).length;
   }
+
+  private isPlayerPlaying(player: Player): boolean {
+    let playingTables: number = this.event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined).length;
+    return playingTables > 0;
+  }
 } 

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { config } from '../config';
 import { Table } from "../models/table.model";
 import { GameEvent } from "../models/game-event.model";
+import { Player } from "../models/player.model";
+import { TableRecord } from "../models/table-record.model";
 
 
 @Component({
@@ -13,6 +15,7 @@ export class BillDisplayerComponent implements OnInit {
 
     @Input() private table: Table;
     @Input() private event: GameEvent;
+    @Input() private player: Player;
     @Input() private interval: number;
 
     private currentBill: number;
@@ -28,7 +31,11 @@ export class BillDisplayerComponent implements OnInit {
     }
 
     private updateTotalBill() {
-        if (this.event != undefined) {
+        if (this.player != undefined && this.event != undefined) {
+            this.currentBill = this.calculatePlayerBill(this.player);
+            console.log(this.currentBill);
+        }
+        else if (this.event != undefined) {
             this.currentBill = this.calculateEventBill(this.event);
         } else if (this.table != undefined) {
             this.currentBill = this.calculateTableBill(this.table);
@@ -49,5 +56,20 @@ export class BillDisplayerComponent implements OnInit {
         }
         let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
         return (leaseTimeMillis / 3600000) * table.hourlyRate;
+    }
+
+    private calculatePlayerBill(player: Player): number {
+        let records: TableRecord[] = this.event.tableRecords.filter(record => record.player.Id === player.Id);
+        let total: number = 0;
+        for (let record of records) {
+            let leaseTimeMillis: number = 0;
+            if (record.end != undefined) {
+                leaseTimeMillis = record.end.getTime() - record.start.getTime();
+            } else {
+                leaseTimeMillis = new Date().getTime() - record.start.getTime();
+            }
+            total += (leaseTimeMillis / 3600000) * record.table.hourlyRate;
+        }
+        return total;
     }
 }

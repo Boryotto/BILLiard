@@ -17,7 +17,7 @@
     margin-bottom: 0;
 }
 
-#tables-view {
+#tables-view, #players-view {
     margin-top: 3vh;
     padding: 0 3% 0 3%; 
 }
@@ -33,7 +33,7 @@
     right: 10%;
 }
 
-.table-timer, .table-name{
+.table-timer, .table-name, .player-name{
     display: inline-block;
 }
 

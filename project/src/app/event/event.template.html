@@ -11,7 +11,7 @@
   <h3>Tables</h3>
   <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
   <div class="list-group">
-    <a  class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['/table',table.Id]">
+    <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['/table',table.Id]">
       <img src="../../assets/vectors/billiard.svg" class="list-icon">
       <h4 class="table-name list-group-item-heading">{{ table.name }}</h4>
       <span class="table-link glyphicon glyphicon-new-window"></span>
@@ -23,12 +23,32 @@
       <img src="../../assets/vectors/coins.svg" class="list-icon">
         <bill [interval]=1000 [table]=table ></bill>
       </span>
-      <span >
+      <span>
       <img src="../../assets/vectors/clock.svg" class="list-icon">
       <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
       </span>
       <img src="../../assets/vectors/player.svg" class="list-icon">
       <span> {{ calculatePlayersOnTable(table) }}</span>
+    </a>
+  </div>
+</section>
+<hr>
+<section id="players-view">
+  <h3>Players</h3>
+  <div class="list-group">
+    <a class="player-list-item list-group-item" *ngFor="let player of event.players" [routerLink]="['/player',player.Id]">
+      <img src="../../assets/vectors/player.svg" class="list-icon">
+      <h4 class="player-name list-group-item-heading">{{ player.name }}</h4>
+      <span class="table-link glyphicon glyphicon-new-window"></span>
+      <br>
+
+      <span *ngIf="isPlayerPlaying(player)" class="table-status label label-success">Playing</span>
+      <span *ngIf="!isPlayerPlaying(player)" class="table-status label label-default">Resting</span>
+
+      <span>
+      <img src="../../assets/vectors/coins.svg" class="list-icon">
+        <bill [interval]=1000 [player]=player [event]=event></bill>
+      </span>
     </a>
   </div>
 </section>
