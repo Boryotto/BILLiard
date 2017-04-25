@@ -49,6 +49,10 @@
       <img src="../../assets/vectors/coins.svg" class="list-icon">
         <bill [interval]=1000 [player]=player [event]=event></bill>
       </span>
+      <span *ngIf="isPlayerPlaying(player)">
+        <img src="../../assets/vectors/billiard.svg" class="list-icon">
+        {{ getActivePlayerTables(player).length }}
+      </span>
     </a>
   </div>
 </section>

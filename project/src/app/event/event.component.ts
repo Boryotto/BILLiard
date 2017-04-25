@@ -35,7 +35,7 @@ export class EventComponent implements OnInit {
 
     let eventName = "New Event";
     let tables: Table[] = [
-      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 24, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
+      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 25, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
       new Table(1023, 'Table 53', 56.90, null, null, false, TableMoveStatus.NULL)
     ];
     let players: Player[] = [
@@ -45,9 +45,9 @@ export class EventComponent implements OnInit {
       new Player(507069, 'Yuval Milman', []),
       new Player(506069, 'Gadiel Ben Shitrit', []),
       new Player(505069, 'Tal Zehazi', []),
-      ];
+    ];
     let movements: TableMovement[] = [];
-    let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 24, 22, 0, 0, 0), null)]
+    let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 25, 22, 0, 0, 0), null)]
     this.event = new GameEvent(1030, eventName, tables, players, NaN, movements, tableRecords, new Date(), null);
   }
 
@@ -58,5 +58,10 @@ export class EventComponent implements OnInit {
   private isPlayerPlaying(player: Player): boolean {
     let playingTables: number = this.event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined).length;
     return playingTables > 0;
+  }
+
+  private getActivePlayerTables(player: Player): Table[] {
+    let playingTablesRecords: TableRecord[] = this.event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined);
+    return playingTablesRecords.map<Table>(record => record.table);
   }
 } 
