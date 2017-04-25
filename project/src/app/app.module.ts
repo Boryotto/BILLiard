@@ -10,6 +10,7 @@ import { LocalDataStorerService } from "./services/storage/local-data-storer.ser
 import { TimerComponent } from "./timer/timer.component";
 import { BillDisplayerComponent } from "./bill/bill-displayer.component";
 import { TableViewComponent } from "./table/table-view.component";
+import { PlayerViewComponent } from "./player/player-view.component";
 
 @NgModule({
   imports: [
@@ -21,7 +22,9 @@ import { TableViewComponent } from "./table/table-view.component";
     EventComponent,
     TimerComponent,
     BillDisplayerComponent,
-    TableViewComponent
+    TableViewComponent,
+    PlayerViewComponent
+
   ],
   bootstrap: [AppComponent],
   providers: [
