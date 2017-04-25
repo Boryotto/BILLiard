@@ -36,3 +36,7 @@
 .table-timer, .table-name{
     display: inline-block;
 }
+
+.table-link {
+    float: right;
+}

@@ -9,6 +9,7 @@ import { EventComponent } from './event/event.component';
 import { LocalDataStorerService } from "./services/storage/local-data-storer.service";
 import { TimerComponent } from "./timer/timer.component";
 import { BillDisplayerComponent } from "./bill/bill-displayer.component";
+import { TableViewComponent } from "./table/table-view.component";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { BillDisplayerComponent } from "./bill/bill-displayer.component";
     AppComponent,
     EventComponent,
     TimerComponent,
-    BillDisplayerComponent
+    BillDisplayerComponent,
+    TableViewComponent
   ],
   bootstrap: [AppComponent],
   providers: [

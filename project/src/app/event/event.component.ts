@@ -36,7 +36,7 @@ export class EventComponent implements OnInit {
     let eventName = "New Event";
     let tables: Table[] = [
       new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 24, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
-      new Table(1003, 'Table 53', 56.90, new Date(2017, 3, 24, 22, 0, 0, 0), null, false, TableMoveStatus.NULL)
+      new Table(1023, 'Table 53', 56.90, null, null, false, TableMoveStatus.NULL)
     ];
     let players: Player[] = [new Player(50069, 'Mor Koshokaro', [])];
     let movements: TableMovement[] = [];
