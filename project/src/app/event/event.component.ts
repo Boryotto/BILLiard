@@ -45,6 +45,6 @@ export class EventComponent implements OnInit {
   }
 
   private calculatePlayersOnTable(table: Table) {
-    return this.event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table === table).length;
+    return this.event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table.Id === table.Id && tableRecord.end == undefined).length;
   }
 } 

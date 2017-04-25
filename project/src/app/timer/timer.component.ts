@@ -17,6 +17,7 @@ export class TimerComponent implements OnInit {
         this.currentDate = new Date(this.start);
         if (this.difference) {
             this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
+            this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset
         }
         setInterval(() => {
             this.currentDate = new Date(this.currentDate.getTime() + this.interval);
