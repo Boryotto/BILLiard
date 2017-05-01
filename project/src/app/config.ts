@@ -3,7 +3,7 @@ export const config: any = {
     currencyISOCode: 'ILS'
 };
 
-export const colorPallete: Object = {
+export const colorPallete: any = {
     primary: '#2196F3',
     primary_dark: '#1976D2',
     primary_light: '#BBDEFB',
@@ -12,4 +12,8 @@ export const colorPallete: Object = {
     secondary_text: '#757575',
     icons: '#FFFFFF',
     divider: '#BDBDBD',
-}
+};
+
+export const errorCodes: any = {
+    '404': "Object not found :(" 
+};

@@ -11,6 +11,7 @@ import { TimerComponent } from "./timer/timer.component";
 import { BillDisplayerComponent } from "./bill/bill-displayer.component";
 import { TableViewComponent } from "./table/table-view.component";
 import { PlayerViewComponent } from "./player/player-view.component";
+import { ErrorComponent } from "./error/error.component";
 
 @NgModule({
   imports: [
@@ -23,8 +24,8 @@ import { PlayerViewComponent } from "./player/player-view.component";
     TimerComponent,
     BillDisplayerComponent,
     TableViewComponent,
-    PlayerViewComponent
-
+    PlayerViewComponent,
+    ErrorComponent
   ],
   bootstrap: [AppComponent],
   providers: [
