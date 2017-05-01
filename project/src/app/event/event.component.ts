@@ -25,31 +25,33 @@ export class EventComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dataStorer: LocalDataStorerService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.eventId = +params['id'];
     })
 
-    let eventName = "New Event";
-    let tables: Table[] = [
-      new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 25, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
-      new Table(1023, 'Table 53', 56.90, null, null, false, TableMoveStatus.NULL)
-    ];
-    let players: Player[] = [
-      new Player(50069, 'Mor Koshokaro', []),
-      new Player(504069, 'Maya Levy', []),
-      new Player(503069, 'Lior Sarfati', []),
-      new Player(507069, 'Yuval Milman', []),
-      new Player(506069, 'Gadiel Ben Shitrit', []),
-      new Player(505069, 'Tal Zehazi', []),
-    ];
-    let movements: TableMovement[] = [];
-    let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 25, 22, 0, 0, 0), null)]
-    this.event = new GameEvent(1030, eventName, tables, players, 156, movements, tableRecords, new Date(), null);
+    this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).then(() => console.log(this.event));
 
+    // let eventName = "New Event";
+    // let tables: Table[] = [
+    //   new Table(1003, 'Table 23', 56.90, new Date(2017, 3, 25, 22, 0, 0, 0), null, true, TableMoveStatus.NULL),
+    //   new Table(1023, 'Table 53', 56.90, null, null, false, TableMoveStatus.NULL)
+    // ];
+    // let players: Player[] = [
+    //   new Player(50069, 'Mor Koshokaro', []),
+    //   new Player(504069, 'Maya Levy', []),
+    //   new Player(503069, 'Lior Sarfati', []),
+    //   new Player(507069, 'Yuval Milman', []),
+    //   new Player(506069, 'Gadiel Ben Shitrit', []),
+    //   new Player(505069, 'Tal Zehazi', []),
+    // ];
+    // let movements: TableMovement[] = [];
+    // let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 25, 22, 0, 0, 0), null)]
+    // this.event = new GameEvent(1030, eventName, tables, players, 156, movements, tableRecords, new Date(), null);
+    
+    // this.dataStorer.storeGameEvent(this.event);
   }
 
   private calculatePlayersOnTable(table: Table) {

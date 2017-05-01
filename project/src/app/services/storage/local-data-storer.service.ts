@@ -43,8 +43,8 @@ export class LocalDataStorerService implements IDataStorer {
                         storedData.hourlyRate,
                         movements,
                         tableRecords,
-                        storedData.start,
-                        storedData.end
+                        storedData.start == undefined ? null : new Date(storedData.start),
+                        storedData.end == undefined ? null : new Date(storedData.end)
                     ))
                 });
         });
@@ -75,6 +75,7 @@ export class LocalDataStorerService implements IDataStorer {
         });
         let storableData: any = {
             Id: event.Id,
+            name: event.name,
             tableIds: tableIds,
             playerIds: playerIds,
             hourlyRate: event.hourlyRate,
@@ -129,8 +130,8 @@ export class LocalDataStorerService implements IDataStorer {
                 tableId,
                 storedData.name,
                 storedData.hourlyRate,
-                storedData.start,
-                storedData.end,
+                storedData.start == undefined ? null : new Date(storedData.start),
+                storedData.end == undefined ? null : new Date(storedData.end),
                 storedData.isOpen,
                 storedData.moveStatus as TableMoveStatus))
         });
@@ -174,7 +175,7 @@ export class LocalDataStorerService implements IDataStorer {
                 return this.getPlayer(storedData.playerId);
             }).then(resolvedPlayer => {
                 player = resolvedPlayer;
-                resolve(new TableRecord(recordId, table, player, storedData.start, storedData.end));
+                resolve(new TableRecord(recordId, table, player, storedData.start == undefined ? null : new Date(storedData.start), storedData.end == undefined ? null : new Date(storedData.end)));
             });
         });
     }
