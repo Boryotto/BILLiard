@@ -48,7 +48,8 @@ export class EventComponent implements OnInit {
     ];
     let movements: TableMovement[] = [];
     let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 25, 22, 0, 0, 0), null)]
-    this.event = new GameEvent(1030, eventName, tables, players, NaN, movements, tableRecords, new Date(), null);
+    this.event = new GameEvent(1030, eventName, tables, players, 156, movements, tableRecords, new Date(), null);
+
   }
 
   private calculatePlayersOnTable(table: Table) {

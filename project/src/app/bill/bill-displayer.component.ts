@@ -33,7 +33,6 @@ export class BillDisplayerComponent implements OnInit {
     private updateTotalBill() {
         if (this.player != undefined && this.event != undefined) {
             this.currentBill = this.calculatePlayerBill(this.player);
-            console.log(this.currentBill);
         }
         else if (this.event != undefined) {
             this.currentBill = this.calculateEventBill(this.event);

@@ -2,6 +2,8 @@
 
 #event-title {
     color: white;
+    padding-left: 10%;
+    
 }
 
 #event-subtitle {
@@ -10,9 +12,8 @@
 }
 
 #event-jumbotron {
-    padding-top: 13vh;
+    padding-top: 10vh;
     padding-bottom: 12vh;
-    padding-left: 10%;
     background-color: #2196F3; /* primary */
     margin-bottom: 0;
 }

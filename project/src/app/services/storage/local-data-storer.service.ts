@@ -8,8 +8,6 @@ import { MiscItem } from "../../models/misc-item.model";
 import { TableRecord } from "../../models/table-record.model";
 import { TableMovement } from "../../models/table-movement.model";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
-import { StorableBase } from "../../interfaces/storable.interface";
-import { ObjectFactory } from "./object-factory.factory";
 
 @Injectable()
 export class LocalDataStorerService implements IDataStorer {
