@@ -15,13 +15,15 @@ import { GameEvent } from "../models/game-event.model";
 export class TableViewComponent implements OnInit {
 
     private tableId: number;
+    private eventId: number;
 
     constructor(private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.tableId = +params['id'];
+            this.tableId = +params['tableId'];
+            this.eventId = +params['eventId'];
         })
     }
 

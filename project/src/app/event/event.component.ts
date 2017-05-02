@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
 import { MiscItem } from "../models/misc-item.model";
@@ -24,15 +24,17 @@ export class EventComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataStorer: LocalDataStorerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.eventId = +params['id'];
+      this.eventId = +params['eventId'];
     })
-
-    this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).then(() => console.log(this.event));
+    this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).then(() => console.log(this.event)).catch(reason => {
+      this.router.navigate(['/error'])
+    });
 
     // let eventName = "New Event";
     // let tables: Table[] = [
@@ -50,7 +52,7 @@ export class EventComponent implements OnInit {
     // let movements: TableMovement[] = [];
     // let tableRecords: TableRecord[] = [new TableRecord(80, tables[0], players[0], new Date(2017, 3, 25, 22, 0, 0, 0), null)]
     // this.event = new GameEvent(1030, eventName, tables, players, 156, movements, tableRecords, new Date(), null);
-    
+
     // this.dataStorer.storeGameEvent(this.event);
   }
 

@@ -5,9 +5,9 @@ import { PlayerViewComponent } from "./player/player-view.component";
 import { ErrorComponent } from "./error/error.component";
 
 export const appRoutes: Routes = [
-    { path: 'event/:id', component: EventComponent },
-    { path: 'table/:id', component: TableViewComponent },
-    { path: 'player/:id', component: PlayerViewComponent },
+    { path: 'event/:eventId', component: EventComponent },
+    { path: 'event/:eventId/table/:tableId', component: TableViewComponent },
+    { path: 'event/:eventId/player/:playerId', component: PlayerViewComponent },
     { path: 'error/:id', component: ErrorComponent },
     { path: '**', redirectTo: '' }
 ];
