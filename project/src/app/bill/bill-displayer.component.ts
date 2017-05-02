@@ -69,6 +69,7 @@ export class BillDisplayerComponent implements OnInit {
             }
             total += (leaseTimeMillis / 3600000) * record.table.hourlyRate;
         }
+        player.miscItems.forEach(item => total += item.price);
         return total;
     }
 }

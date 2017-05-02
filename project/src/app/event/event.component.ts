@@ -42,7 +42,7 @@ export class EventComponent implements OnInit {
     //   new Table(1023, 'Table 53', 56.90, null, null, false, TableMoveStatus.NULL)
     // ];
     // let players: Player[] = [
-    //   new Player(50069, 'Mor Koshokaro', []),
+    //   new Player(50069, 'Mor Koshokaro', [new MiscItem(5556, "Weinstepfen Beer", 35.50, new Date(2017, 4, 2, 23, 0, 0, 0))]),
     //   new Player(504069, 'Maya Levy', []),
     //   new Player(503069, 'Lior Sarfati', []),
     //   new Player(507069, 'Yuval Milman', []),

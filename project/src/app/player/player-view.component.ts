@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { config } from '../config';
-import { Table } from "../models/table.model";
 import { GameEvent } from "../models/game-event.model";
 import { Player } from "../models/player.model";
+import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
 import { MiscItem } from "../models/misc-item.model";
 
 
@@ -19,15 +19,27 @@ export class PlayerViewComponent implements OnInit {
     private playerId: number;
     private player: Player;
     private eventId: number;
+    private event: GameEvent;
 
-    constructor(private route: ActivatedRoute
+    private currencyISOCode: string;
+
+    constructor(
+        private route: ActivatedRoute,
+        private dataStorer: LocalDataStorerService
     ) { }
 
     ngOnInit(): void {
+        this.currencyISOCode = config.currencyISOCode;
+
         this.route.params.subscribe(params => {
             this.playerId = +params['playerId'];
             this.eventId = +params['eventId'];
-        })
+        });
+
+        this.dataStorer.getGameEvent(this.eventId).then(event => this.event = event).then(() => {
+            this.player = this.event.players.find(player => player.Id === this.playerId);
+        });
+
 
         let item: MiscItem = new MiscItem(12100, "Cola", 14.60, new Date());
         let item2: MiscItem = <MiscItem>{

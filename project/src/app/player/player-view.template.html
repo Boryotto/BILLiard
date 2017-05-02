@@ -1,7 +1,31 @@
-<div id="event-jumbotron" class="jumbotron">
-  <div class="container">
-    <h1 id="event-title">
-      <!--{{player.name}}<br>-->
-    </h1>
-</div>
-</div>
+<section id="body-wrapper" *ngIf="event">
+  <div class="jumbotron">
+    <div class="container">
+      <h1 id="jumbotron-title">
+        {{player.name}}<br>
+        <small id="jumbotron-subtitle">Player</small>
+      </h1>
+    </div>
+  </div>
+  <section id="misc-items-view" class="page-section">
+    <h3>Food & Drinks</h3>
+    <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
+    <div class="fixed-height-list list-group">
+      <a class="list-group-item" *ngFor="let item of player.miscItems">
+        <span>
+          <img src="../../assets/vectors/pint.svg" class="list-icon">
+          <h4 class="inline-heading list-group-item-heading">{{ item.name }}</h4>
+        </span>
+        <br>
+        <span>
+          <img src="../../assets/vectors/coins.svg" class="list-icon">
+          {{ item.price | currency:currencyISOCode:true:'1.2-2' }}
+        </span>
+        <span>
+          <img src="../../assets/vectors/clock.svg" class="list-icon">
+          {{ item.orderDate | date:'HH:mm:ss' }}
+      </span>
+      </a>
+    </div>
+  </section>
+</section>
