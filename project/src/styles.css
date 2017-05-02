@@ -3,3 +3,53 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
+
+
+@import "../../style.global.less";
+
+#jumbotron-title {
+    color: white;
+    padding-left: 10%;
+    
+}
+
+#jumbotron-subtitle {
+    color: #BBDEFB;
+    margin-left: 2%;
+}
+
+.jumbotron {
+    padding-top: 10vh;
+    padding-bottom: 12vh;
+    background-color: #2196F3; /* primary */
+    margin-bottom: 0;
+}
+
+.page-section {
+    margin-top: 3vh;
+    padding: 0 3% 0 3%; 
+}
+
+.list-icon {
+    max-width: 10%;
+    max-height: 4vh;
+    display: inline-block;
+}
+
+.table-float-right {
+    position: relative;
+    right: 10%;
+}
+
+.inline-heading {
+    display: inline-block;
+}
+
+.table-link {
+    float: right;
+}
+
+.fixed-height-list {
+    max-height: 40vh;
+    overflow: scroll;
+}
