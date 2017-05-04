@@ -13,10 +13,14 @@ import { TableViewComponent } from "./table/table-view.component";
 import { PlayerViewComponent } from "./player/player-view.component";
 import { ErrorComponent } from "./error/error.component";
 
+import { ModalModule } from 'ngx-bootstrap';
+
+
 @NgModule({
   imports: [
     RouterModule.forRoot(appRoutes),
-    BrowserModule
+    BrowserModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
