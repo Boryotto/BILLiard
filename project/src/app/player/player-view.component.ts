@@ -59,8 +59,12 @@ export class PlayerViewComponent implements OnInit {
     }
 
     private onMiscItemFormSubmitted(newMiscItem: MiscItem) {
-        console.log('submitted!')
-        console.log(newMiscItem);
+        if (newMiscItem != undefined) {
+            console.debug(`a new misc item was submitted with id: ${newMiscItem.Id}`)
+            this.player.miscItems.push(newMiscItem);
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the new misc item`);
+            this.dataStorer.storeGameEvent(this.event);
+        }
     }
 
 }
