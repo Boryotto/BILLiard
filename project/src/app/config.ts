@@ -1,5 +1,6 @@
 export const config: any = {
     guidLength: 10,
+    guidCacheKey: "GUID_Cache",
     currencyISOCode: 'ILS'
 };
 
