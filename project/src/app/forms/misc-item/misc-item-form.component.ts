@@ -15,20 +15,21 @@ export class MiscItemFormComponent implements OnInit {
   @Input() private bodyClass: string;
   @Input() private footerClass: string;
 
-  public isFormValid: boolean = false;
-
   constructor(private IDGenerator: IDGeneratorService) { }
 
-  model = new MiscItem(this.IDGenerator.generateId(), "", 489, new Date());
-
-  submitted = false;
+  private model: MiscItem;
 
   onSubmit() {
-    this.submitted = true;
-    console.log("submitted!!");
+    this.onSubmitEvent.emit(this.model);
+    this.resetForm();
   }
 
   ngOnInit(): void {
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.model = new MiscItem(this.IDGenerator.generateId(), "", 0, new Date());
   }
 
 }

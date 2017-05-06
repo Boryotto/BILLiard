@@ -59,7 +59,8 @@ export class PlayerViewComponent implements OnInit {
     }
 
     private onMiscItemFormSubmitted(newMiscItem: MiscItem) {
-        
+        console.log('submitted!')
+        console.log(newMiscItem);
     }
 
 }

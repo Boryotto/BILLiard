@@ -1,5 +1,5 @@
-<div [ngClass]="bodyClass">
-    <form (ngSubmit)="onSubmit()" #newItemForm="ngForm">
+<form (ngSubmit)="onSubmit($event)" #newItemForm="ngForm">
+    <div [ngClass]="bodyClass">
         <div class="form-group has-feedback" [ngClass]="{'has-success': name.valid, 'has-error': !name.valid}">
             <label class="control-label" for="name">Name</label>
             <div class="input-group">
@@ -14,16 +14,14 @@
             <label class="control-label" for="price">Price</label>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="number" min="0" class="form-control" id="price" [(ngModel)]="model.price" name="price" #price="ngModel"
-                    required>
+                <input type="number" min="0" class="form-control" id="price" [(ngModel)]="model.price" name="price" #price="ngModel" required>
             </div>
             <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="price.valid" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!price.valid" aria-hidden="true"></span>
         </div>
-
-    </form>
-</div>
-<div [ngClass]="footerClass">
-    <button type="submit" class="btn btn-success" [disabled]="!newItemForm.form.valid">Add Item</button>
-    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancelForm.emit()">Cancel</button>
-</div>
+    </div>
+    <div [ngClass]="footerClass">
+        <button type="submit" class="btn btn-success" [disabled]="!newItemForm.form.valid">Add Item</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancelForm.emit()">Cancel</button>
+    </div>
+</form>

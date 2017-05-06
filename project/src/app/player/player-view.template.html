@@ -45,7 +45,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event)"
+      <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); newItemModal.hide()"
         (onCancelForm)="newItemModal.hide()"></misc-item-form>
     </div>
   </div>
