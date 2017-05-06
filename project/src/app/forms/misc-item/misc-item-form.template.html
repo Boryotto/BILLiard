@@ -2,7 +2,7 @@
     <div [ngClass]="bodyClass">
         <div class="form-group has-feedback" [ngClass]="{'has-success': name.valid, 'has-error': !name.valid}">
             <label class="control-label" for="name">Name</label>
-            <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required>
+            <input type="text" autofocus class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required>
             <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="name.valid" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!name.valid" aria-hidden="true"></span>
         </div>

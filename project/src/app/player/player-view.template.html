@@ -12,10 +12,12 @@
   </div>
   <section id="misc-items-view" class="page-section">
     <h3>Food & Drinks</h3>
-    <h4 class="text-center" *ngIf="player.miscItems.length === 0">No items to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="list-group-item" (click)="newItemModal.show()">+ Add a new item</a>
       <a class="list-group-item" *ngFor="let item of player.miscItems">
+        <button type="button" class="close pull-right remove-list-item" (click)="onRemoveMiscItem(item)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <span>
           <img src="../../assets/vectors/pint.svg" class="list-icon">
           <h4 class="inline-heading list-group-item-heading">{{ item.name }}</h4>
@@ -31,6 +33,7 @@
       </span>
       </a>
     </div>
+    <h4 class="text-center" *ngIf="player.miscItems.length === 0">No items to display.</h4>
   </section>
 </section>
 

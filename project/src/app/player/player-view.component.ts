@@ -67,4 +67,14 @@ export class PlayerViewComponent implements OnInit {
         }
     }
 
+    private onRemoveMiscItem(miscItem: MiscItem) {
+        if (miscItem != undefined) {
+            console.debug(`Removing misc item (Id: ${miscItem.Id}) from the player's misc Items list`);
+            this.player.miscItems = this.player.miscItems.filter(currentItem => currentItem.Id !== miscItem.Id);
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the new misc item`);
+            this.dataStorer.storeGameEvent(this.event);
+        }
+
+    }
+
 }
