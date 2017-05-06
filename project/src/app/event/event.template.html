@@ -10,6 +10,7 @@
   <section id="tables-view" class="page-section">
     <h3>Tables</h3>
     <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
+    <h4 class="text-center" *ngIf="event.tables.length === 0">No tables to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['table',table.Id]">
         <img src="../../assets/vectors/billiard.svg" class="list-icon">
@@ -35,6 +36,7 @@
   <hr>
   <section id="players-view" class="page-section">
     <h3>Players</h3>
+    <h4 class="text-center" *ngIf="event.players.length === 0">No players to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="player-list-item list-group-item" *ngFor="let player of event.players" [routerLink]="['player',player.Id]">
         <img src="../../assets/vectors/player.svg" class="list-icon">

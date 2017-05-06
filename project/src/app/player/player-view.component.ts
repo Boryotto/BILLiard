@@ -54,4 +54,12 @@ export class PlayerViewComponent implements OnInit {
         // let r: MiscItem = JSON.parse(localStorage.getItem(item.Id.toString())) as MiscItem;
     }
 
+    private addMiscItem() {
+
+    }
+
+    private onMiscItemFormSubmitted(newMiscItem: MiscItem) {
+        
+    }
+
 }

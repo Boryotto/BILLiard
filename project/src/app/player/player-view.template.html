@@ -1,6 +1,9 @@
 <section id="body-wrapper" *ngIf="event">
   <div class="jumbotron">
     <div class="container">
+      <a [routerLink]="['../..']" class="back-button">
+        <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to event
+      </a>
       <h1 id="jumbotron-title">
         {{player.name}}<br>
         <small id="jumbotron-subtitle">Player</small>
@@ -9,8 +12,9 @@
   </div>
   <section id="misc-items-view" class="page-section">
     <h3>Food & Drinks</h3>
-    <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
+    <h4 class="text-center" *ngIf="player.miscItems.length === 0">No items to display.</h4>
     <div class="fixed-height-list list-group">
+      <a class="list-group-item" (click)="newItemModal.show()">+ Add a new item</a>
       <a class="list-group-item" *ngFor="let item of player.miscItems">
         <span>
           <img src="../../assets/vectors/pint.svg" class="list-icon">
@@ -29,3 +33,20 @@
     </div>
   </section>
 </section>
+
+<!--Add misc. item modal-->
+<div bsModal #newItemModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newItemModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add a new item</h4>
+        <button type="button" class="close pull-right" (click)="newItemModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event)"
+        (onCancelForm)="newItemModal.hide()"></misc-item-form>
+    </div>
+  </div>
+</div>
