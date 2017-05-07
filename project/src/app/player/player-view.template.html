@@ -10,7 +10,7 @@
       </h1>
     </div>
   </div>
-  <section id="misc-items-view" class="page-section">
+  <section id="misc-items-view" class="page-section" *ngIf="player">
     <h3>Food & Drinks</h3>
     <div class="fixed-height-list list-group">
       <a class="list-group-item" (click)="newItemModal.show()">+ Add a new item</a>
@@ -35,6 +35,31 @@
     </div>
     <h4 class="text-center" *ngIf="player.miscItems.length === 0">No items to display.</h4>
   </section>
+</section>
+
+<section id="tables-view" class="page-section" *ngIf="event">
+  <h3>Tables</h3>
+  <div class="fixed-height-list list-group">
+    <a class="list-group-item" (click)="newItemModal.show()">+ Add a table</a>
+    <a class="list-group-item" *ngFor="let table of getPlayingTables()">
+      <img src="../../assets/vectors/billiard.svg" class="list-icon">
+      <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
+      <span class="table-link glyphicon glyphicon-new-window"></span>
+      <br>
+      <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
+      <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
+
+      <span>
+      <img src="../../assets/vectors/coins.svg" class="list-icon">
+        <bill [interval]=1000 [table]=table ></bill>
+      </span>
+      <span>
+      <img src="../../assets/vectors/clock.svg" class="list-icon">
+      <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
+      </span>
+    </a>
+  </div>
+  <h4 class="text-center" *ngIf="getPlayingTables().length === 0">No items to display.</h4>
 </section>
 
 <!--Add misc. item modal-->

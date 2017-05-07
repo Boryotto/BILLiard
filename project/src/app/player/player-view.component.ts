@@ -6,6 +6,7 @@ import { GameEvent } from "../models/game-event.model";
 import { Player } from "../models/player.model";
 import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
 import { MiscItem } from "../models/misc-item.model";
+import { Table } from "../models/table.model";
 
 
 @Component({
@@ -77,4 +78,10 @@ export class PlayerViewComponent implements OnInit {
 
     }
 
+    private getPlayingTables(): Table[] {
+        return this.event.tableRecords.map(tableRecord => {
+            if (tableRecord.player.Id === this.player.Id && tableRecord.end == undefined)
+                return tableRecord.table;
+        });
+    }
 }
