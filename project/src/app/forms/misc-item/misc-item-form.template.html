@@ -11,7 +11,7 @@
             <label class="control-label" for="price">Price</label>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="number" min="0" step="0.01" class="form-control" id="price" [(ngModel)]="model.price" name="price" #price="ngModel"
+                <input type="text" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="price" [(ngModel)]="model.price" name="price" #price="ngModel"
                     required>
             </div>
             <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="price.valid" aria-hidden="true"></span>
