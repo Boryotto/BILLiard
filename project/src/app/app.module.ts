@@ -18,9 +18,11 @@ import { TableViewComponent } from "./table/table-view.component";
 import { PlayerViewComponent } from "./player/player-view.component";
 import { ErrorComponent } from "./error/error.component";
 import { MiscItemFormComponent } from "./forms/misc-item/misc-item-form.component";
+import { TablePickerFormComponent } from "./forms/table-picker/table-picker-form.component";
 
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
+import { GameCalculationsService } from "./services/game/game-calculations.service";
 
 
 @NgModule({
@@ -38,12 +40,14 @@ import { ModalModule } from 'ngx-bootstrap';
     TableViewComponent,
     PlayerViewComponent,
     ErrorComponent,
-    MiscItemFormComponent
+    MiscItemFormComponent,
+    TablePickerFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [
     LocalDataStorerService,
-    IDGeneratorService
+    IDGeneratorService,
+    GameCalculationsService
   ]
 })
 export class AppModule { }
