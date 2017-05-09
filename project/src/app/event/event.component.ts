@@ -10,6 +10,7 @@ import { TableMoveStatus } from "../models/table-move-status.enum";
 import { TableMovement } from "../models/table-movement.model";
 import { TableRecord } from "../models/table-record.model";
 import { config } from '../config';
+import { GameCalculationsService } from "../services/game/game-calculations.service";
 
 @Component({
   selector: 'event',
@@ -25,7 +26,8 @@ export class EventComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private dataStorer: LocalDataStorerService
+    private dataStorer: LocalDataStorerService,
+    private gameCalculator: GameCalculationsService
   ) { }
 
   ngOnInit(): void {
@@ -55,18 +57,5 @@ export class EventComponent implements OnInit {
 
     // this.dataStorer.storeGameEvent(this.event);
   }
-
-  private calculatePlayersOnTable(table: Table) {
-    return this.event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table.Id === table.Id && tableRecord.end == undefined).length;
-  }
-
-  private isPlayerPlaying(player: Player): boolean {
-    let playingTables: number = this.event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined).length;
-    return playingTables > 0;
-  }
-
-  private getActivePlayerTables(player: Player): Table[] {
-    let playingTablesRecords: TableRecord[] = this.event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined);
-    return playingTablesRecords.map<Table>(record => record.table);
-  }
+  
 } 

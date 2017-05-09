@@ -35,13 +35,12 @@
     </div>
     <h4 class="text-center" *ngIf="player.miscItems.length === 0">No items to display.</h4>
   </section>
-</section>
 
-<section id="tables-view" class="page-section" *ngIf="event">
-  <h3>Tables</h3>
-  <div class="fixed-height-list list-group">
-    <a class="list-group-item" (click)="newItemModal.show()">+ Add a table</a>
-    <a class="list-group-item" *ngFor="let table of getPlayingTables()">
+  <section id="tables-view" class="page-section" *ngIf="event">
+    <h3>Tables</h3>
+    <div class="fixed-height-list list-group">
+      <a class="list-group-item" (click)="tablePickerModal.show()">+ Add a table</a>
+      <a class="list-group-item" *ngFor="let table of gameCalculator.getPlayingTables(player, event)">
       <img src="../../assets/vectors/billiard.svg" class="list-icon">
       <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
       <span class="table-link glyphicon glyphicon-new-window"></span>
@@ -58,9 +57,12 @@
       <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
       </span>
     </a>
-  </div>
-  <h4 class="text-center" *ngIf="getPlayingTables().length === 0">No items to display.</h4>
+    </div>
+    <h4 class="text-center" *ngIf="gameCalculator.getPlayingTables(player, event).length === 0">No items to display.</h4>
+  </section>
+
 </section>
+
 
 <!--Add misc. item modal-->
 <div bsModal #newItemModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newItemModalLabel"
@@ -75,6 +77,23 @@
       </div>
       <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); newItemModal.hide()"
         (onCancelForm)="newItemModal.hide()"></misc-item-form>
+    </div>
+  </div>
+</div>
+
+<!--Add table modal-->
+<div bsModal #tablePickerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tablePickerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add a table</h4>
+        <button type="button" class="close pull-right" (click)="tablePickerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <table-picker #tablePicker *ngIf="event" [tables]="gameCalculator.getAvailableTablesForPlayer(player, event)" [bodyClass]='"modal-body"'
+        [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); tablePickerModal.hide()" (onCancelForm)="tablePickerModal.hide()"></table-picker>
     </div>
   </div>
 </div>

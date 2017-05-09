@@ -7,6 +7,7 @@ import { Player } from "../models/player.model";
 import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
 import { MiscItem } from "../models/misc-item.model";
 import { Table } from "../models/table.model";
+import { GameCalculationsService } from "../services/game/game-calculations.service";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class PlayerViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataStorer: LocalDataStorerService
+        private dataStorer: LocalDataStorerService,
+        private gameCalculator: GameCalculationsService
     ) { }
 
     ngOnInit(): void {
@@ -82,6 +84,17 @@ export class PlayerViewComponent implements OnInit {
         return this.event.tableRecords.map(tableRecord => {
             if (tableRecord.player.Id === this.player.Id && tableRecord.end == undefined)
                 return tableRecord.table;
+        });
+    }
+
+    private getAvailableTables(): Table[] {
+        return this.event.tables.filter(table => {
+            let relatedPlayerTableRecords = this.event.tableRecords.findIndex(record =>
+                record.table.Id === table.Id &&
+                record.end == undefined &&
+                record.player.Id === this.player.Id
+            );
+            return relatedPlayerTableRecords === -1 && table.isOpen;
         });
     }
 }

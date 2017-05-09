@@ -29,7 +29,7 @@
       <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
       </span>
         <img src="../../assets/vectors/player.svg" class="list-icon">
-        <span> {{ calculatePlayersOnTable(table) }}</span>
+        <span> {{ gameCalculator.calculatePlayersOnTable(table, event) }}</span>
       </a>
     </div>
   </section>
@@ -44,16 +44,16 @@
         <span class="table-link glyphicon glyphicon-new-window"></span>
         <br>
 
-        <span *ngIf="isPlayerPlaying(player)" class="table-status label label-success">Playing</span>
-        <span *ngIf="!isPlayerPlaying(player)" class="table-status label label-default">Resting</span>
+        <span *ngIf="gameCalculator.isPlayerPlaying(player, event)" class="table-status label label-success">Playing</span>
+        <span *ngIf="!gameCalculator.isPlayerPlaying(player, event)" class="table-status label label-default">Resting</span>
 
         <span>
       <img src="../../assets/vectors/coins.svg" class="list-icon">
         <bill [interval]=1000 [player]=player [event]=event></bill>
       </span>
-        <span *ngIf="isPlayerPlaying(player)">
+        <span *ngIf="gameCalculator.isPlayerPlaying(player, event)">
         <img src="../../assets/vectors/billiard.svg" class="list-icon">
-        {{ getActivePlayerTables(player).length }}
+        {{ gameCalculator.getPlayingTables(player, event).length }}
       </span>
       </a>
     </div>

@@ -1,0 +1,37 @@
+<form (ngSubmit)="onSubmit($event)" #newItemForm="ngForm" *ngIf="event">
+  <div [ngClass]="bodyClass">
+    <!--<div class="radio" *ngFor="let table of tables">-->
+    <!--<label>-->
+
+    <h3>Pick a table</h3>
+    <div class="fixed-height-list list-group">
+      <a class="table-list-item list-group-item" *ngFor="let table of tables">
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+
+        <img src="../../assets/vectors/billiard.svg" class="list-icon">
+        <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
+        <br>
+        <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
+        <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
+
+        <span>
+      <img src="../../assets/vectors/coins.svg" class="list-icon">
+        <bill [interval]=1000 [table]=table ></bill>
+      </span>
+        <span>
+      <img src="../../assets/vectors/clock.svg" class="list-icon">
+      <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
+      </span>
+        <img src="../../assets/vectors/player.svg" class="list-icon">
+        <span> {{ gameCalculator.calculatePlayersOnTable(table, event) }}</span>
+      </a>
+    </div>
+
+    <!--</label>-->
+    <!--</div>-->
+  </div>
+  <div [ngClass]="footerClass">
+    <button type="submit" class="btn btn-success" [disabled]="!newItemForm.form.valid">Add Item</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancelForm.emit()">Cancel</button>
+  </div>
+</form>
