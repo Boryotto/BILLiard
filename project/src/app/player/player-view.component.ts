@@ -8,6 +8,8 @@ import { LocalDataStorerService } from "../services/storage/local-data-storer.se
 import { MiscItem } from "../models/misc-item.model";
 import { Table } from "../models/table.model";
 import { GameCalculationsService } from "../services/game/game-calculations.service";
+import { TableRecord } from "../models/table-record.model";
+import { IDGeneratorService } from "../services/storage/id-generator.service";
 
 
 @Component({
@@ -28,6 +30,7 @@ export class PlayerViewComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private dataStorer: LocalDataStorerService,
+        private IDGenerator: IDGeneratorService,
         private gameCalculator: GameCalculationsService
     ) { }
 
@@ -78,6 +81,22 @@ export class PlayerViewComponent implements OnInit {
             this.dataStorer.storeGameEvent(this.event);
         }
 
+    }
+
+    private onTableFormSubmitted(newTable: Table) {
+        if (newTable != undefined) {
+            console.debug(`a new table was added to the player. table id: ${newTable.Id}`)
+            let newTableRecord: TableRecord = new TableRecord(
+                this.IDGenerator.generateId(),
+                newTable,
+                this.player,
+                new Date(),
+                null
+            );
+            this.event.tableRecords.push(newTableRecord);
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the new tableRecord`);
+            this.dataStorer.storeGameEvent(this.event);
+        }
     }
 
     private getPlayingTables(): Table[] {

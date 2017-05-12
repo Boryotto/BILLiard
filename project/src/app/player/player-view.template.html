@@ -61,7 +61,6 @@
     <h4 class="text-center" *ngIf="gameCalculator.getPlayingTables(player, event).length === 0">No items to display.</h4>
   </section>
 
-</section>
 
 
 <!--Add misc. item modal-->
@@ -71,7 +70,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">Add a new item</h4>
-        <button type="button" class="close pull-right" (click)="newItemModal.hide()" aria-label="Close">
+        <button type="button" class="close pull-right" (click)="miscItemForm.resetForm();newItemModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -88,12 +87,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">Add a table</h4>
-        <button type="button" class="close pull-right" (click)="tablePickerModal.hide()" aria-label="Close">
+        <button type="button" class="close pull-right" (click)="tablePickerForm.resetForm();tablePickerModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <table-picker #tablePicker *ngIf="event" [tables]="gameCalculator.getAvailableTablesForPlayer(player, event)" [bodyClass]='"modal-body"'
-        [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); tablePickerModal.hide()" (onCancelForm)="tablePickerModal.hide()"></table-picker>
+      <table-picker #tablePickerForm [tables]="gameCalculator.getAvailableTablesForPlayer(player, event)" [bodyClass]='"modal-body"'
+        [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); tablePickerModal.hide()" (onCancelForm)="tablePickerModal.hide()"></table-picker>
     </div>
   </div>
 </div>
+
+</section>

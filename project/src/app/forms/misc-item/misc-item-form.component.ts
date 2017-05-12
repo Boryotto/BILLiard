@@ -28,7 +28,7 @@ export class MiscItemFormComponent implements OnInit {
     this.resetForm();
   }
 
-  private resetForm() {
+  resetForm() {
     this.model = new MiscItem(this.IDGenerator.generateId(), "", 0, new Date());
   }
 

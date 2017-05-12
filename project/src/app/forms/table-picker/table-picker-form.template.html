@@ -1,13 +1,10 @@
 <form (ngSubmit)="onSubmit($event)" #newItemForm="ngForm" *ngIf="event">
   <div [ngClass]="bodyClass">
-    <!--<div class="radio" *ngFor="let table of tables">-->
-    <!--<label>-->
 
     <h3>Pick a table</h3>
     <div class="fixed-height-list list-group">
-      <a class="table-list-item list-group-item" *ngFor="let table of tables">
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-
+      <a class="table-list-item list-group-item" [ngClass]="{active : table.Id === chosenTableId}" *ngFor="let table of tables"
+        (click)="setChosenTable(table)">
         <img src="../../assets/vectors/billiard.svg" class="list-icon">
         <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
         <br>
@@ -25,13 +22,12 @@
         <img src="../../assets/vectors/player.svg" class="list-icon">
         <span> {{ gameCalculator.calculatePlayersOnTable(table, event) }}</span>
       </a>
+      <h4 class="text-center" *ngIf="tables.length === 0">No items to display.</h4>
     </div>
 
-    <!--</label>-->
-    <!--</div>-->
   </div>
   <div [ngClass]="footerClass">
-    <button type="submit" class="btn btn-success" [disabled]="!newItemForm.form.valid">Add Item</button>
-    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancelForm.emit()">Cancel</button>
+    <button type="submit" class="btn btn-success" [disabled]="chosenTableId === -1">Add Item</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="resetForm(); onCancelForm.emit();">Cancel</button>
   </div>
 </form>
