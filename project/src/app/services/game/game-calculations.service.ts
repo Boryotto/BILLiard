@@ -19,10 +19,10 @@ export class GameCalculationsService {
         return playingTables > 0;
     }
 
-    // Returns an array of the tables that the player is currently playing on
-    public getPlayingTables(player: Player, event: GameEvent): Table[] {
+    // Returns an array of the tableRecords that the player is currently playing on
+    public getPlayingTables(player: Player, event: GameEvent): TableRecord[] {
         let playingTablesRecords: TableRecord[] = event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined);
-        return playingTablesRecords.map<Table>(record => record.table);
+        return playingTablesRecords;
     }
 
     // Returns an array of tables that are:

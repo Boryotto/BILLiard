@@ -40,61 +40,63 @@
     <h3>Tables</h3>
     <div class="fixed-height-list list-group">
       <a class="list-group-item" (click)="tablePickerModal.show()">+ Add a table</a>
-      <a class="list-group-item" *ngFor="let table of gameCalculator.getPlayingTables(player, event)">
-      <img src="../../assets/vectors/billiard.svg" class="list-icon">
-      <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
-      <span class="table-link glyphicon glyphicon-new-window"></span>
-      <br>
-      <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
-      <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
+      <a class="list-group-item" *ngFor="let tableRecord of gameCalculator.getPlayingTables(player, event)">
+        <button type="button" class="close pull-right remove-list-item" (click)="onRemoveTableRecord(tableRecord)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="../../assets/vectors/billiard.svg" class="list-icon">
+        <h4 class="inline-heading list-group-item-heading">{{ tableRecord.table.name }}</h4>
+        <br>
+        <span *ngIf="tableRecord.table.isOpen" class="table-status label label-success">Open</span>
+        <span *ngIf="!tableRecord.table.isOpen" class="table-status label label-default">Closed</span>
 
-      <span>
-      <img src="../../assets/vectors/coins.svg" class="list-icon">
-        <bill [interval]=1000 [table]=table ></bill>
-      </span>
-      <span>
-      <img src="../../assets/vectors/clock.svg" class="list-icon">
-      <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
-      </span>
-    </a>
+        <span>
+        <img src="../../assets/vectors/coins.svg" class="list-icon">
+          <bill [interval]=1000 [table]=tableRecord.table ></bill>
+        </span>
+        <span>
+        <img src="../../assets/vectors/clock.svg" class="list-icon">
+        <timer [interval]=1000 [start]="tableRecord.table.start" [difference]=true [active]=tableRecord.table.isOpen></timer>
+        </span>
+      </a>
     </div>
     <h4 class="text-center" *ngIf="gameCalculator.getPlayingTables(player, event).length === 0">No items to display.</h4>
   </section>
 
 
 
-<!--Add misc. item modal-->
-<div bsModal #newItemModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newItemModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Add a new item</h4>
-        <button type="button" class="close pull-right" (click)="miscItemForm.resetForm();newItemModal.hide()" aria-label="Close">
+  <!--Add misc. item modal-->
+  <div bsModal #newItemModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newItemModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Add a new item</h4>
+          <button type="button" class="close pull-right" (click)="miscItemForm.resetForm();newItemModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        </div>
+        <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); newItemModal.hide()"
+          (onCancelForm)="newItemModal.hide()"></misc-item-form>
       </div>
-      <misc-item-form #miscItemForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onMiscItemFormSubmitted($event); newItemModal.hide()"
-        (onCancelForm)="newItemModal.hide()"></misc-item-form>
     </div>
   </div>
-</div>
 
-<!--Add table modal-->
-<div bsModal #tablePickerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tablePickerModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Add a table</h4>
-        <button type="button" class="close pull-right" (click)="tablePickerForm.resetForm();tablePickerModal.hide()" aria-label="Close">
+  <!--Add table modal-->
+  <div bsModal #tablePickerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tablePickerModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Add a table</h4>
+          <button type="button" class="close pull-right" (click)="tablePickerForm.resetForm();tablePickerModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        </div>
+        <table-picker #tablePickerForm [tables]="gameCalculator.getAvailableTablesForPlayer(player, event)" [bodyClass]='"modal-body"'
+          [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); tablePickerModal.hide()" (onCancelForm)="tablePickerModal.hide()"></table-picker>
       </div>
-      <table-picker #tablePickerForm [tables]="gameCalculator.getAvailableTablesForPlayer(player, event)" [bodyClass]='"modal-body"'
-        [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); tablePickerModal.hide()" (onCancelForm)="tablePickerModal.hide()"></table-picker>
     </div>
   </div>
-</div>
 
 </section>

@@ -85,7 +85,8 @@ export class PlayerViewComponent implements OnInit {
 
     private onTableFormSubmitted(newTable: Table) {
         if (newTable != undefined) {
-            console.debug(`a new table was added to the player. table id: ${newTable.Id}`)
+            console.debug(`a new table was added to the player. table id: ${newTable.Id}`);
+            console.debug(`Creating a new table record...`);
             let newTableRecord: TableRecord = new TableRecord(
                 this.IDGenerator.generateId(),
                 newTable,
@@ -93,27 +94,38 @@ export class PlayerViewComponent implements OnInit {
                 new Date(),
                 null
             );
+            console.debug(`A new table record with id: ${newTableRecord.Id} was created.`);
             this.event.tableRecords.push(newTableRecord);
             console.debug(`Storing the game event (id: ${this.event.Id}) with the new tableRecord`);
             this.dataStorer.storeGameEvent(this.event);
         }
     }
 
-    private getPlayingTables(): Table[] {
-        return this.event.tableRecords.map(tableRecord => {
-            if (tableRecord.player.Id === this.player.Id && tableRecord.end == undefined)
-                return tableRecord.table;
-        });
+    private onRemoveTableRecord(tableRecord: TableRecord) {
+        if (tableRecord != undefined) {
+            console.debug(`Removing table (Id: ${tableRecord.table.Id}) from the player's playing tables list`);
+            let eventTableRecord = this.event.tableRecords.find(record => record.Id === tableRecord.Id);
+            eventTableRecord.end = new Date();
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the new misc item`);
+            this.dataStorer.storeGameEvent(this.event);
+        }
     }
 
-    private getAvailableTables(): Table[] {
-        return this.event.tables.filter(table => {
-            let relatedPlayerTableRecords = this.event.tableRecords.findIndex(record =>
-                record.table.Id === table.Id &&
-                record.end == undefined &&
-                record.player.Id === this.player.Id
-            );
-            return relatedPlayerTableRecords === -1 && table.isOpen;
-        });
-    }
+    // private getPlayingTables(): Table[] {
+    //     return this.event.tableRecords.map(tableRecord => {
+    //         if (tableRecord.player.Id === this.player.Id && tableRecord.end == undefined)
+    //             return tableRecord.table;
+    //     });
+    // }
+
+    // private getAvailableTables(): Table[] {
+    //     return this.event.tables.filter(table => {
+    //         let relatedPlayerTableRecords = this.event.tableRecords.findIndex(record =>
+    //             record.table.Id === table.Id &&
+    //             record.end == undefined &&
+    //             record.player.Id === this.player.Id
+    //         );
+    //         return relatedPlayerTableRecords === -1 && table.isOpen;
+    //     });
+    // }
 }

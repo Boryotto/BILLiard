@@ -18,6 +18,8 @@ export class LocalDataStorerService implements IDataStorer {
         return Promise.all(promises);
     }
 
+    
+
     getGameEvent(eventId: number): Promise<GameEvent> {
         return new Promise<GameEvent>((resolve, reject) => {
             let storedData = JSON.parse(localStorage.getItem(`${eventId}`));
