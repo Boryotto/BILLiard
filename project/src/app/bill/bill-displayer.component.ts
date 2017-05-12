@@ -9,7 +9,6 @@ import { TableRecord } from "../models/table-record.model";
 @Component({
     selector: 'bill',
     template: "{{ currentBill | currency:currencyISOCode:true:'1.2-2' }}"
-
 })
 export class BillDisplayerComponent implements OnInit {
 
@@ -69,7 +68,7 @@ export class BillDisplayerComponent implements OnInit {
             }
             total += (leaseTimeMillis / 3600000) * record.table.hourlyRate;
         }
-        player.miscItems.forEach(item => total += item.price);
+        player.miscItems.forEach(item => total += +item.price);
         return total;
     }
 }
