@@ -34,7 +34,7 @@ export class EventComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.eventId = +params['eventId'];
     })
-    this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).then(() => console.log(this.event)).catch(reason => {
+    this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).catch(reason => {
       this.router.navigate(['/error'])
     });
 

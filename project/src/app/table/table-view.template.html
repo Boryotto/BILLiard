@@ -1,0 +1,57 @@
+<section id="body-wrapper" *ngIf="event && table">
+    <div class="jumbotron">
+        <div class="container">
+            <a [routerLink]="['../..']" class="back-button">
+        <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to event
+      </a>
+            <h1 id="jumbotron-title">
+                <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #tableNameForm="ngForm">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+              <button type="button" class="btn btn-default" (click)="enteredTableName=''; isEditingName=false">Cancel</button>
+            </span>
+                        <input type="text" class="form-control" id="name" required [(ngModel)]="enteredTableName" name="name" #name="ngModel">
+                        <span class="input-group-btn">
+              <button type="submit" class="btn btn-default" [disabled]="!tableNameForm.form.valid">Change</button>
+            </span>
+                    </div>
+                </form>
+                <span *ngIf="!isEditingName">
+          {{table.name}}
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
+                </span>
+                <br>
+                <small id="jumbotron-subtitle">Table</small>
+            </h1>
+        </div>
+    </div>
+
+    <section id="tables-view" class="page-section" *ngIf="event">
+        <h3>Players</h3>
+        <div class="fixed-height-list list-group">
+            <a class="list-group-item" (click)="tablePickerModal.show()">+ Add a player</a>
+            <a class="list-group-item" *ngFor="let player of gameCalculator.getPlayersOnTable(table, event)">
+        <button type="button" class="close pull-right remove-list-item" (click)="onRemovePlayingPlayer(player)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="../../assets/vectors/player.svg" class="list-icon">
+        <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
+        <br>
+
+        <span *ngIf="gameCalculator.isPlayerPlaying(player, event)" class="table-status label label-success">Playing</span>
+        <span *ngIf="!gameCalculator.isPlayerPlaying(player, event)" class="table-status label label-default">Resting</span>
+
+        <span>
+      <img src="../../assets/vectors/coins.svg" class="list-icon">
+        <bill [interval]=1000 [player]=player [event]=event [table]="table"></bill>
+      </span>
+        <span *ngIf="gameCalculator.isPlayerPlaying(player, event)">
+        <img src="../../assets/vectors/billiard.svg" class="list-icon">
+        {{ gameCalculator.getPlayingTables(player, event).length }}
+      </span>
+      </a>
+        </div>
+        <h4 class="text-center" *ngIf="gameCalculator.getPlayersOnTable(table, event).length === 0">No players to display.</h4>
+    </section>
+
+</section>
