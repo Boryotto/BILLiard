@@ -5,7 +5,22 @@
         <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to event
       </a>
       <h1 id="jumbotron-title">
-        {{player.name}}<br>
+        <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #playerNameForm="ngForm">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" (click)="enteredPlayerName=''; isEditingName=false">Cancel</button>
+            </span>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="enteredPlayerName" name="name" #name="ngModel">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-default" [disabled]="!playerNameForm.form.valid">Change</button>
+            </span>
+          </div>
+        </form>
+        <span *ngIf="!isEditingName">
+          {{player.name}}
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
+        </span>
+        <br>
         <small id="jumbotron-subtitle">Player</small>
       </h1>
     </div>
@@ -52,7 +67,7 @@
 
         <span>
         <img src="../../assets/vectors/coins.svg" class="list-icon">
-          <bill [interval]=1000 [table]=tableRecord.table ></bill>
+          <bill [interval]=1000 [table]=tableRecord.table [player]="player" [event]="event"></bill>
         </span>
         <span>
         <img src="../../assets/vectors/clock.svg" class="list-icon">

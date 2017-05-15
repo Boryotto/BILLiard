@@ -26,6 +26,8 @@ export class PlayerViewComponent implements OnInit {
     private event: GameEvent;
 
     private currencyISOCode: string;
+    private isEditingName: boolean;
+    private enteredPlayerName: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,7 +37,9 @@ export class PlayerViewComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+
         this.currencyISOCode = config.currencyISOCode;
+        this.isEditingName = false;
 
         this.route.params.subscribe(params => {
             this.playerId = +params['playerId'];
@@ -60,8 +64,11 @@ export class PlayerViewComponent implements OnInit {
         // let r: MiscItem = JSON.parse(localStorage.getItem(item.Id.toString())) as MiscItem;
     }
 
-    private addMiscItem() {
-
+    private onChangeName() {
+        console.debug(`Changing player name from: ${this.player.name} to: ${this.enteredPlayerName}`);
+        this.player.name = this.enteredPlayerName;
+        this.dataStorer.storePlayer(this.player);
+        this.isEditingName = false;
     }
 
     private onMiscItemFormSubmitted(newMiscItem: MiscItem) {
@@ -110,22 +117,4 @@ export class PlayerViewComponent implements OnInit {
             this.dataStorer.storeGameEvent(this.event);
         }
     }
-
-    // private getPlayingTables(): Table[] {
-    //     return this.event.tableRecords.map(tableRecord => {
-    //         if (tableRecord.player.Id === this.player.Id && tableRecord.end == undefined)
-    //             return tableRecord.table;
-    //     });
-    // }
-
-    // private getAvailableTables(): Table[] {
-    //     return this.event.tables.filter(table => {
-    //         let relatedPlayerTableRecords = this.event.tableRecords.findIndex(record =>
-    //             record.table.Id === table.Id &&
-    //             record.end == undefined &&
-    //             record.player.Id === this.player.Id
-    //         );
-    //         return relatedPlayerTableRecords === -1 && table.isOpen;
-    //     });
-    // }
 }
