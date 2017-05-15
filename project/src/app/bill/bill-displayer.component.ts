@@ -30,7 +30,10 @@ export class BillDisplayerComponent implements OnInit {
     }
 
     private updateTotalBill() {
-        if (this.player != undefined && this.event != undefined) {
+        if (this.player != undefined && this.table != undefined && this.event != undefined) {
+            this.currentBill = this.calculatePlayerTableBill(this.player, this.table);
+        }
+        else if (this.player != undefined && this.event != undefined) {
             this.currentBill = this.calculatePlayerBill(this.player);
         }
         else if (this.event != undefined) {
@@ -54,6 +57,25 @@ export class BillDisplayerComponent implements OnInit {
         }
         let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
         return (leaseTimeMillis / 3600000) * table.hourlyRate;
+    }
+
+    private calculatePlayerTableBill(player: Player, table: Table): number {
+        let records: TableRecord[] = this.event.tableRecords.filter(record =>
+            record.player.Id === player.Id
+            && record.table.Id === table.Id
+        );
+        let total: number = 0;
+        for (let record of records) {
+            let leaseTimeMillis: number = 0;
+            if (record.end != undefined) {
+                leaseTimeMillis = record.end.getTime() - record.start.getTime();
+            } else {
+                leaseTimeMillis = new Date().getTime() - record.start.getTime();
+            }
+            total += (leaseTimeMillis / 3600000) * record.table.hourlyRate;
+        }
+        player.miscItems.forEach(item => total += +item.price);
+        return total;
     }
 
     private calculatePlayerBill(player: Player): number {
