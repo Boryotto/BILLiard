@@ -113,7 +113,7 @@ export class PlayerViewComponent implements OnInit {
             console.debug(`Removing table (Id: ${tableRecord.table.Id}) from the player's playing tables list`);
             let eventTableRecord = this.event.tableRecords.find(record => record.Id === tableRecord.Id);
             eventTableRecord.end = new Date();
-            console.debug(`Storing the game event (id: ${this.event.Id}) with the new misc item`);
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the updated table records`);
             this.dataStorer.storeGameEvent(this.event);
         }
     }
