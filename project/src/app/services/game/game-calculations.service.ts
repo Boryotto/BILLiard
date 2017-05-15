@@ -13,6 +13,13 @@ export class GameCalculationsService {
         return event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table.Id === table.Id && tableRecord.end == undefined).length;
     }
 
+    // Returns the players that are currently playing on the table    
+    public getPlayersOnTable(table: Table, event: GameEvent): Player[] {
+        return event.tableRecords.filter((tableRecord: TableRecord) => tableRecord.table.Id === table.Id && tableRecord.end == undefined)
+            .map(tableRecord => tableRecord.player);
+    }
+
+
     // Determines whether the player is playing in any table right now.
     public isPlayerPlaying(player: Player, event: GameEvent): boolean {
         let playingTables: number = event.tableRecords.filter(record => record.player.Id === player.Id && record.end == undefined).length;
