@@ -23,6 +23,7 @@ import { TablePickerFormComponent } from "./forms/table-picker/table-picker-form
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
 import { GameCalculationsService } from "./services/game/game-calculations.service";
+import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-form.component";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { GameCalculationsService } from "./services/game/game-calculations.servi
     PlayerViewComponent,
     ErrorComponent,
     MiscItemFormComponent,
-    TablePickerFormComponent
+    TablePickerFormComponent,
+    PlayerPickerFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [

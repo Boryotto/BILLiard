@@ -7,6 +7,8 @@ import { GameEvent } from "../models/game-event.model";
 import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
 import { GameCalculationsService } from "../services/game/game-calculations.service";
 import { Player } from "../models/player.model";
+import { IDGeneratorService } from "../services/storage/id-generator.service";
+import { TableRecord } from "../models/table-record.model";
 
 
 @Component({
@@ -29,7 +31,9 @@ export class TableViewComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private dataStorer: LocalDataStorerService,
-        private gameCalculator: GameCalculationsService
+        private gameCalculator: GameCalculationsService,
+        private IDGenerator: IDGeneratorService
+
     ) { }
 
     ngOnInit(): void {
@@ -60,5 +64,22 @@ export class TableViewComponent implements OnInit {
         }
     }
 
+    private onPlayerFormSubmitted(newPlayer: Player) {
+        if (newPlayer != undefined) {
+            console.debug(`a new player was added to the table. player id: ${newPlayer.Id}`);
+            console.debug(`Creating a new table record...`);
+            let newTableRecord: TableRecord = new TableRecord(
+                this.IDGenerator.generateId(),
+                this.table,
+                newPlayer,
+                new Date(),
+                null
+            );
+            console.debug(`A new table record with id: ${newTableRecord.Id} was created.`);
+            this.event.tableRecords.push(newTableRecord);
+            console.debug(`Storing the game event (id: ${this.event.Id}) with the new tableRecord`);
+            this.dataStorer.storeGameEvent(this.event);
+        }
+    }
 
 }

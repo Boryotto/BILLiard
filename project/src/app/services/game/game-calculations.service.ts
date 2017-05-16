@@ -46,4 +46,12 @@ export class GameCalculationsService {
         });
     }
 
+    // Returns an array of players that aren't currentlu playing on the given table
+    public getAvailablePlayersForTable(table: Table, event: GameEvent): Player[] {
+        return event.players.filter(player => {
+            let playerPlayingTables: TableRecord[] = this.getPlayingTables(player, event);
+            return playerPlayingTables.find(tableRecord => tableRecord.table.Id === table.Id) == undefined;
+        });
+    }
+
 }
