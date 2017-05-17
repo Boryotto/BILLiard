@@ -6,6 +6,7 @@ import { GameCalculationsService } from "../../services/game/game-calculations.s
 import { ActivatedRoute } from "@angular/router";
 import { LocalDataStorerService } from "../../services/storage/local-data-storer.service";
 import { GameEvent } from "../../models/game-event.model";
+import { Table } from "../../models/table.model";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class PlayerPickerFormComponent implements OnInit {
     @Input() private bodyClass: string;
     @Input() private footerClass: string;
     @Input() private players: Player[];
+    @Input() private table: Table;
 
     private eventId: number;
     private event: GameEvent;

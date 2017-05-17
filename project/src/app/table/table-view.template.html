@@ -65,8 +65,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
                 </div>
-                <player-picker #playerPickerForm [players]="gameCalculator.getAvailablePlayersForTable(table, event)" [bodyClass]='"modal-body"'
-                    [footerClass]='"modal-footer"' (onSubmitEvent)="onPlayerFormSubmitted($event); playerPickerModal.hide()" (onCancelForm)="playerPickerModal.hide()"></player-picker>
+                <player-picker #playerPickerForm [table]="table" [players]="gameCalculator.getAvailablePlayersForTable(table, event)" [bodyClass]='"modal-body"'
+                    [footerClass]='"modal-footer"' (onSubmitEvent)="onPlayerFormSubmitted($event); playerPickerModal.hide()"
+                    (onCancelForm)="playerPickerModal.hide()"></player-picker>
             </div>
         </div>
     </div>
