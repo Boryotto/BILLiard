@@ -19,6 +19,7 @@ import { PlayerViewComponent } from "./player/player-view.component";
 import { ErrorComponent } from "./error/error.component";
 import { MiscItemFormComponent } from "./forms/misc-item/misc-item-form.component";
 import { TablePickerFormComponent } from "./forms/table-picker/table-picker-form.component";
+import { PlayerFormComponent } from "./forms/player/player-form.component";
 
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
@@ -43,7 +44,8 @@ import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-f
     ErrorComponent,
     MiscItemFormComponent,
     TablePickerFormComponent,
-    PlayerPickerFormComponent
+    PlayerPickerFormComponent,
+    PlayerFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [

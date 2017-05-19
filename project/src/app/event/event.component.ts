@@ -68,4 +68,13 @@ export class EventComponent implements OnInit {
     this.isEditingName = false;
   }
 
+  private onPlayerFormSubmitted(newPlayer: Player) {
+    if (newPlayer != undefined) {
+      console.debug(`a new player was submitted with id: ${newPlayer.Id}`)
+      this.event.players.push(newPlayer);
+      console.debug(`Storing the game event (id: ${this.event.Id}) with the new player`);
+      this.dataStorer.storeGameEvent(this.event);
+    }
+  }
+
 } 
