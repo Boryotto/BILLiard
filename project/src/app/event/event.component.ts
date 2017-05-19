@@ -23,6 +23,9 @@ export class EventComponent implements OnInit {
   private event: GameEvent;
   private currencyISOCode: string = config.currencyISOCode;
 
+  private isEditingName: boolean;
+  private enteredEventName: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -57,5 +60,12 @@ export class EventComponent implements OnInit {
 
     // this.dataStorer.storeGameEvent(this.event);
   }
-  
+
+  private onChangeName() {
+    console.debug(`Changing event name from: ${this.event.name} to: ${this.enteredEventName}`);
+    this.event.name = this.enteredEventName;
+    this.dataStorer.storeGameEvent(this.event);
+    this.isEditingName = false;
+  }
+
 } 

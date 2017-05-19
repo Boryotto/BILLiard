@@ -2,11 +2,54 @@
   <div class="jumbotron">
     <div class="container">
       <h1 id="jumbotron-title">
-        {{event.name}}<br>
+        <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #eventNameForm="ngForm">
+          <div class="input-group">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" (click)="enteredEventName=''; isEditingName=false">Cancel</button>
+            </span>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="enteredEventName" name="name" #name="ngModel">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" [disabled]="!eventNameForm.form.valid">Change</button>
+            </span>
+          </div>
+        </form>
+        <span *ngIf="!isEditingName">
+          {{event.name}}
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
+        </span>
+        <br>
+        <small id="jumbotron-subtitle">Event</small> <br>
         <small id="jumbotron-subtitle">{{ event.start | date:"EEEE, d/M/y"}}</small>
       </h1>
     </div>
   </div>
+  <section id="info-view" class="page-section">
+    <h3>Info</h3>
+    <div class="horizontal-list text-center">
+      <div class="col-xs-4">
+        <h2> {{ event.players.length }}</h2>
+        <h4>Players</h4>
+      </div>
+      <div class="col-xs-8">
+        <h2>
+          <timer [interval]=1000 [start]="event.start" [difference]=true [active]="!event.end" [displayDays]="true"></timer>
+        </h2>
+        <h4>Time Playing</h4>
+      </div>
+      <div class="col-xs-8">
+        <h2>
+          <bill [interval]=1000 [player]=player [event]=event></bill>
+        </h2>
+        <h4>Total Bill</h4>
+      </div>
+      <div class="col-xs-4">
+        <h2 *ngIf="!event.end" class="text-success">Open</h2>
+        <h2 *ngIf="event.end" class="text-danger">Closed</h2>
+        <h4>Status</h4>
+      </div>
+    </div>
+  </section>
+  <hr>
   <section id="tables-view" class="page-section">
     <h3>Tables</h3>
     <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
