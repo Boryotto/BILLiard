@@ -4,8 +4,8 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
     selector: 'timer',
     template: `
-    <span *ngIf="calculateDayCount(currentDate) < 1">{{ currentDate | date:"HH:mm:ss" }}</span>
-    <span *ngIf="calculateDayCount(currentDate) >= 1">
+    <span *ngIf="calculateDayCount(currentDate) < 1 || !displayDays">{{ currentDate | date:"HH:mm:ss" }}</span>
+    <span *ngIf="calculateDayCount(currentDate) >= 1 && displayDays">
         {{ currentDate | date:"HH:mm:ss" }} 
         ({{ calculateDayCount(currentDate) | number:'1.0-0'}})
     </span>
@@ -17,6 +17,7 @@ export class TimerComponent implements OnInit {
     @Input() private active: boolean;
     @Input() private interval: number;
     @Input() private difference: boolean;
+    @Input() private displayDays: boolean;
 
     private currentDate: Date;
 
