@@ -2,7 +2,8 @@ export const config: any = {
     guidLength: 10,
     guidCacheKey: "GUID_Cache",
     currencyISOCode: 'ILS',
-    currencySymbol: '₪'
+    currencySymbol: '₪',
+    eventIdArrayStorageKey: 'eventIds'
 };
 
 export const colorPallete: any = {
@@ -17,5 +18,5 @@ export const colorPallete: any = {
 };
 
 export const errorCodes: any = {
-    '404': "Object not found :(" 
+    '404': "Object not found :("
 };

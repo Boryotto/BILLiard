@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { config } from "../../config";
 
 import { IDataStorer } from '../../interfaces/data-storer.interface'
 import { GameEvent } from "../../models/game-event.model";
@@ -12,13 +13,29 @@ import { TableMoveStatus } from "../../models/table-move-status.enum";
 @Injectable()
 export class LocalDataStorerService implements IDataStorer {
 
+    getAllGameEvents(): Promise<GameEvent[]> {
+        return new Promise<GameEvent[]>((resolve, reject) => {
+            let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey))
+            this.resolveObjectArray<GameEvent>(eventIds, this.getGameEvent).then(gameEvents => resolve(gameEvents));
+        });
+    }
+
+    private addEventToEventList(event: GameEvent) {
+        let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
+        if (!eventIds) {
+            eventIds = [];
+        }
+        if (!eventIds.find(id => id === event.Id)) {
+            eventIds.push(event.Id);
+        }
+        localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
+    }
+
     private resolveObjectArray<T>(objectIds: number[], resolveFunction: any): Promise<T[]> {
         let promises: Promise<T>[] = [];
         objectIds.forEach(Id => promises.push(resolveFunction.call(this, Id) as Promise<T>));
         return Promise.all(promises);
     }
-
-    
 
     getGameEvent(eventId: number): Promise<GameEvent> {
         return new Promise<GameEvent>((resolve, reject) => {
@@ -87,6 +104,7 @@ export class LocalDataStorerService implements IDataStorer {
             end: event.end
         }
         localStorage.setItem(`${event.Id}`, JSON.stringify(storableData));
+        this.addEventToEventList(event);
     }
 
     getPlayer(playerId: number): Promise<Player> {
