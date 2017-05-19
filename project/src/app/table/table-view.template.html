@@ -29,7 +29,37 @@
             </h1>
         </div>
     </div>
-
+    <section id="info-view" class="page-section">
+        <h3>Info</h3>
+        <div class="horizontal-list text-center">
+            <div class="col-xs-4">
+                <h2>{{ table.hourlyRate | currency:currencyISOCode:true:'1.2-2' }}</h2>
+                <h4>Hourly Rate</h4>
+            </div>
+            <div class="col-xs-4">
+                <h2 *ngIf="table.isOpen" class="text-success">Open</h2>
+                <h2 *ngIf="!table.isOpen" class="text-danger">Closed</h2>
+                <h4>Status</h4>
+            </div>
+            <div class="col-xs-4">
+                <h2>{{ gameCalculator.calculatePlayersOnTable(table, event) }}</h2>
+                <h4>Players</h4>
+            </div>
+            <div class="col-xs-5">
+                <h2>
+                    <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
+                </h2>
+                <h4>Time Rented</h4>
+            </div>
+            <div class="col-xs-7">
+                <h2>
+                    <bill [interval]=1000 [table]=table></bill>
+                </h2>
+                <h4>Total Bill</h4>
+            </div>
+        </div>
+    </section>
+    <hr>
     <section id="tables-view" class="page-section" *ngIf="event">
         <h3>Players</h3>
         <div class="fixed-height-list list-group">

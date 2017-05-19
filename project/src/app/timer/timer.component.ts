@@ -3,7 +3,13 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'timer',
-    template: '{{ currentDate | date:"HH:mm:ss" }}'
+    template: `
+    <span *ngIf="calculateDayCount(currentDate) < 1">{{ currentDate | date:"HH:mm:ss" }}</span>
+    <span *ngIf="calculateDayCount(currentDate) >= 1">
+        {{ currentDate | date:"HH:mm:ss" }} 
+        ({{ calculateDayCount(currentDate) | number:'1.0-0'}})
+    </span>
+    `
 })
 export class TimerComponent implements OnInit {
 
@@ -31,5 +37,9 @@ export class TimerComponent implements OnInit {
             }
         }, this.interval);
 
+    }
+
+    private calculateDayCount(date: Date): number {
+        return date.getTime() / (1000 * 3600 * 24);
     }
 }

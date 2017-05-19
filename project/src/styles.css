@@ -66,3 +66,10 @@ h1 {
 .edit-list-item {
     color: #757575;
 }
+
+.horizontal-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}

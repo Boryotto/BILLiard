@@ -26,7 +26,7 @@ export class TableViewComponent implements OnInit {
 
     private isEditingName: boolean;
     private enteredTableName: string;
-
+    private currencyISOCode: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -37,6 +37,8 @@ export class TableViewComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.currencyISOCode = config.currencyISOCode;
+
         this.route.params.subscribe(params => {
             this.tableId = +params['tableId'];
             this.eventId = +params['eventId'];
