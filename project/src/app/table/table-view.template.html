@@ -21,11 +21,7 @@
           <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
                 </span>
                 <br>
-                <small id="jumbotron-subtitle">
-                    Table
-                    <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
-                    <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
-                </small>
+                <small id="jumbotron-subtitle">Table</small>
             </h1>
         </div>
     </div>
@@ -47,7 +43,7 @@
             </div>
             <div class="col-xs-5">
                 <h2>
-                    <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen></timer>
+                    <timer [interval]=1000 [start]="table.start" [difference]=true [active]=table.isOpen [displayDays]="true"></timer>
                 </h2>
                 <h4>Time Rented</h4>
             </div>

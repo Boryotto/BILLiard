@@ -54,4 +54,21 @@ export class GameCalculationsService {
         });
     }
 
+    // Returns the total time a player played on all tables
+    public getPlayerPlayTime(player: Player, event: GameEvent): Date {
+        let totalTime: Date = new Date(0);
+        event.tableRecords.filter(record => record.player.Id === player.Id)
+            .forEach(record => {
+                let playTime: Date;
+                if (record.end != undefined) {
+                    playTime = new Date(record.end.getTime() - record.start.getTime());
+                } else {
+                    playTime = new Date(new Date().getTime() - record.start.getTime());
+                }
+                totalTime = new Date(totalTime.getTime() + playTime.getTime());
+            });
+        
+        return totalTime;
+    }
+
 }

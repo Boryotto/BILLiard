@@ -25,6 +25,30 @@
       </h1>
     </div>
   </div>
+  <section id="info-view" class="page-section">
+    <h3>Info</h3>
+    <div class="horizontal-list text-center">
+      <div class="col-xs-4">
+        <h2 *ngIf="gameCalculator.isPlayerPlaying(player,event)" class="text-success">Playing</h2>
+        <h2 *ngIf="!gameCalculator.isPlayerPlaying(player,event)" class="text-danger">Resting</h2>
+        <h4>Status</h4>
+      </div>
+      <div class="col-xs-8">
+        <h2>
+          <timer [interval]=1000 [start]="gameCalculator.getPlayerPlayTime(player, event)" [difference]=false [active]="gameCalculator.isPlayerPlaying(player,event)"
+            [displayDays]="true"></timer>
+        </h2>
+        <h4>Time Playing</h4>
+      </div>
+      <div class="col-xs-12">
+        <h2>
+          <bill [interval]=1000 [player]=player [event]=event></bill>
+        </h2>
+        <h4>Total Bill</h4>
+      </div>
+    </div>
+  </section>
+  <hr>
   <section id="misc-items-view" class="page-section" *ngIf="player">
     <h3>Food & Drinks</h3>
     <div class="fixed-height-list list-group">
