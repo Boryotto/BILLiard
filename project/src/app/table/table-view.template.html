@@ -8,12 +8,12 @@
                 <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #tableNameForm="ngForm">
                     <div class="input-group">
                         <span class="input-group-btn">
-              <button type="button" class="btn btn-default" (click)="enteredTableName=''; isEditingName=false">Cancel</button>
-            </span>
+                            <button type="button" class="btn btn-default" (click)="enteredTableName=''; isEditingName=false">Cancel</button>
+                        </span>
                         <input type="text" class="form-control" id="name" required [(ngModel)]="enteredTableName" name="name" #name="ngModel">
                         <span class="input-group-btn">
-              <button type="submit" class="btn btn-default" [disabled]="!tableNameForm.form.valid">Change</button>
-            </span>
+                            <button type="submit" class="btn btn-default" [disabled]="!tableNameForm.form.valid">Change</button>
+                        </span>
                     </div>
                 </form>
                 <span *ngIf="!isEditingName">
@@ -21,7 +21,11 @@
           <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
                 </span>
                 <br>
-                <small id="jumbotron-subtitle">Table</small>
+                <small id="jumbotron-subtitle">
+                    Table
+                    <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
+                    <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
+                </small>
             </h1>
         </div>
     </div>
