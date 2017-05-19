@@ -10,7 +10,7 @@
         <div class="form-group has-feedback" [ngClass]="{'has-success': price.valid, 'has-error': !price.valid}">
             <label class="control-label" for="price">Price</label>
             <div class="input-group">
-                <span class="input-group-addon">$</span>
+                <span class="input-group-addon">{{ currencySymbol }}</span>
                 <input type="text" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="price" [(ngModel)]="model.price" name="price" #price="ngModel"
                     required>
             </div>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MiscItem } from "../../models/misc-item.model";
 import { IDGeneratorService } from "../../services/storage/id-generator.service";
-
+import { config } from '../../config';
 
 @Component({
   selector: 'misc-item-form',
@@ -18,6 +18,7 @@ export class MiscItemFormComponent implements OnInit {
   constructor(private IDGenerator: IDGeneratorService) { }
 
   private model: MiscItem;
+  private currencySymbol: string;
 
   onSubmit() {
     this.onSubmitEvent.emit(this.model);
@@ -25,6 +26,7 @@ export class MiscItemFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currencySymbol = config.currencySymbol;
     this.resetForm();
   }
 
