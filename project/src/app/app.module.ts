@@ -25,6 +25,7 @@ import { PlayerFormComponent } from "./forms/player/player-form.component";
 import { ModalModule } from 'ngx-bootstrap';
 import { GameCalculationsService } from "./services/game/game-calculations.service";
 import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-form.component";
+import { TableFormComponent } from "./forms/table/table-form.component";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-f
     MiscItemFormComponent,
     TablePickerFormComponent,
     PlayerPickerFormComponent,
-    PlayerFormComponent
+    PlayerFormComponent,
+    TableFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [

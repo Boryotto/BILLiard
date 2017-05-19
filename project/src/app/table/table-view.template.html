@@ -28,7 +28,7 @@
     <section id="info-view" class="page-section">
         <h3>Info</h3>
         <div class="horizontal-list text-center">
-            <div class="col-xs-4">
+            <div class="col-xs-5">
                 <h2>{{ table.hourlyRate | currency:currencyISOCode:true:'1.2-2' }}</h2>
                 <h4>Hourly Rate</h4>
             </div>
@@ -37,7 +37,7 @@
                 <h2 *ngIf="!table.isOpen" class="text-danger">Closed</h2>
                 <h4>Status</h4>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 <h2>{{ gameCalculator.calculatePlayersOnTable(table, event) }}</h2>
                 <h4>Players</h4>
             </div>

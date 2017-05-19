@@ -76,5 +76,14 @@ export class EventComponent implements OnInit {
       this.dataStorer.storeGameEvent(this.event);
     }
   }
+  
+  private onTableFormSubmitted(newTable: Table) {
+    if (newTable != undefined) {
+      console.debug(`a new table was submitted with id: ${newTable.Id}`)
+      this.event.tables.push(newTable);
+      console.debug(`Storing the game event (id: ${this.event.Id}) with the new table`);
+      this.dataStorer.storeGameEvent(this.event);
+    }
+  }
 
 } 

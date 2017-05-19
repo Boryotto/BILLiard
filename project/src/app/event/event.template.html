@@ -54,7 +54,7 @@
     <h3>Tables</h3>
     <h4 class="text-center" *ngIf="event.tables.length === 0">No tables to display.</h4>
     <div class="fixed-height-list list-group">
-      <a class="list-group-item" (click)="newItemModal.show()">+ Add a new table</a>
+      <a class="list-group-item" (click)="newTableModal.show()">+ Add a new table</a>
       <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['table',table.Id]">
         <img src="../../assets/vectors/billiard.svg" class="list-icon">
         <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
@@ -116,6 +116,23 @@
         </div>
         <player-form #playerForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onPlayerFormSubmitted($event); newPlayerModal.hide()"
           (onCancelForm)="newPlayerModal.hide()"></player-form>
+      </div>
+    </div>
+  </div>
+ 
+  <!--Add table modal-->
+  <div bsModal #newTableModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTableModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Add a new table</h4>
+          <button type="button" class="close pull-right" (click)="tableForm.resetForm();newTableModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <table-form #tableForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); newTableModal.hide()"
+          (onCancelForm)="newTableModal.hide()" [defaultHourlyRate]="event.hourlyRate"></table-form>
       </div>
     </div>
   </div>
