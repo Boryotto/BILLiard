@@ -52,7 +52,6 @@
   <hr>
   <section id="tables-view" class="page-section">
     <h3>Tables</h3>
-    <!--<button type="button" class="btn btn-default table-float-right">Default</button>-->
     <h4 class="text-center" *ngIf="event.tables.length === 0">No tables to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['table',table.Id]">
