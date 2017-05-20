@@ -175,7 +175,7 @@ export class LocalDataStorerService implements IDataStorer {
             if (storedData == undefined) {
                 reject(`Item with the id: ${itemId} was not found`);
             }
-            resolve(new MiscItem(itemId, storedData.name, storedData.price, new Date(storedData.orderDate)));
+            resolve(new MiscItem(itemId, storedData.name, +storedData.price, new Date(storedData.orderDate)));
         });
     }
     storeMiscItem(item: MiscItem): void {
