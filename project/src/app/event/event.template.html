@@ -1,6 +1,9 @@
 <section id="body-wrapper" *ngIf="event">
   <div class="jumbotron">
     <div class="container">
+      <a [routerLink]="['']" class="back-button">
+        <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to overview
+      </a>
       <h1 id="jumbotron-title">
         <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #eventNameForm="ngForm">
           <div class="input-group">
@@ -25,7 +28,7 @@
   </div>
   <section id="info-view" class="page-section">
     <h3>Info</h3>
-    <div class="horizontal-list text-center">
+    <div class="horizontal-list horizontal-list-centered text-center">
       <div class="col-xs-4">
         <h2> {{ event.players.length }}</h2>
         <h4>Players</h4>

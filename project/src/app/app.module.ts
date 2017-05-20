@@ -20,12 +20,15 @@ import { ErrorComponent } from "./error/error.component";
 import { MiscItemFormComponent } from "./forms/misc-item/misc-item-form.component";
 import { TablePickerFormComponent } from "./forms/table-picker/table-picker-form.component";
 import { PlayerFormComponent } from "./forms/player/player-form.component";
+import { OverviewComponent } from "./overview/overview.component";
+import { EventFormComponent } from "./forms/event/event-form.component";
+import { TableFormComponent } from "./forms/table/table-form.component";
+import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-form.component";
 
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
+import { AccordionModule } from 'ngx-bootstrap';
 import { GameCalculationsService } from "./services/game/game-calculations.service";
-import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-form.component";
-import { TableFormComponent } from "./forms/table/table-form.component";
 
 
 @NgModule({
@@ -33,6 +36,7 @@ import { TableFormComponent } from "./forms/table/table-form.component";
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     ModalModule.forRoot(),
+    AccordionModule.forRoot(),
     FormsModule
   ],
   declarations: [
@@ -47,7 +51,9 @@ import { TableFormComponent } from "./forms/table/table-form.component";
     TablePickerFormComponent,
     PlayerPickerFormComponent,
     PlayerFormComponent,
-    TableFormComponent
+    TableFormComponent,
+    EventFormComponent,
+    OverviewComponent
   ],
   bootstrap: [AppComponent],
   providers: [

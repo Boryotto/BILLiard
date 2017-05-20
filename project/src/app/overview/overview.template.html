@@ -1,0 +1,44 @@
+<section id="body-wrapper" *ngIf="events">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 id="jumbotron-title">
+                Events Overview <br>
+            </h1>
+        </div>
+    </div>
+
+
+    <section id="info-view" class="page-section">
+        <h3>Events</h3>
+        <div class="text-center">
+            <div class="col-xs-6" *ngFor="let event of events">
+                <div class="well">
+                    <h2 [routerLink]="['event',event.Id]"> {{ event.name }}</h2>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="well">
+                    <h2 (click)="newEventModal.show()">+</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Add event modal-->
+    <div bsModal #newEventModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newEventModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Add a new Event</h4>
+                    <button type="button" class="close pull-right" (click)="eventForm.resetForm();newEventModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <event-form #eventForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onEventFormSubmitted($event); newEventModal.hide()"
+                    (onCancelForm)="newEventModal.hide()"></event-form>
+            </div>
+        </div>
+    </div>
+
+</section>

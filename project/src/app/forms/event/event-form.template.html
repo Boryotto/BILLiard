@@ -1,0 +1,87 @@
+<form (ngSubmit)="onSubmit($event)" #newEventForm="ngForm">
+    <div [ngClass]="bodyClass">
+        <div class="form-group has-feedback" [ngClass]="{'has-success': name.valid, 'has-error': !name.valid}">
+            <label class="control-label" for="name">Name</label>
+            <input type="text" autofocus class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="name.valid" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!name.valid" aria-hidden="true"></span>
+        </div>
+
+        <div class="form-group has-feedback" [ngClass]="{'has-success': hourlyRate.valid, 'has-error': !hourlyRate.valid}">
+            <label class="control-label" for="hourlyRate">Hourly Rate</label>
+            <div class="input-group">
+                <span class="input-group-addon">{{ currencySymbol }}</span>
+                <input type="text" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="hourlyRate" [(ngModel)]="model.hourlyRate" name="hourlyRate"
+                    #hourlyRate="ngModel" required>
+            </div>
+            <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="hourlyRate.valid" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!hourlyRate.valid" aria-hidden="true"></span>
+        </div>
+        <hr>
+        <h3>Players</h3>
+        <div class="fixed-height-list list-group">
+            <a class="list-group-item" (click)="addNewPlayer()">+ Add a new player</a>
+        </div>
+        <accordion [closeOthers]="true">
+            <accordion-group *ngFor="let player of model.players" #group [isOpen]="latestPlayerIdAdded === player.Id">
+                <div accordion-heading>
+                    <button type="button" class="close pull-right remove-list-item" (click)="removePlayer(player)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="pull-rigt float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down' : group?.isOpen, 
+                    'glyphicon-chevron-right' : !group?.isOpen}"></i>
+                    <img src="../../assets/vectors/player.svg" class="list-icon">
+                    <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
+                </div>
+                <div class="form-group has-feedback" [ngClass]="{'has-success': name.valid, 'has-error': !name.valid}">
+                    <label class="control-label" for="name">Name</label>
+                    <input type="text" autofocus class="form-control" id="name-{{player.Id}}" [(ngModel)]="player.name" name="name-{{player.Id}}"
+                        #name="ngModel" required>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="name.valid" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!name.valid" aria-hidden="true"></span>
+                </div>
+            </accordion-group>
+        </accordion>
+        <hr>
+        <h3>Tables</h3>
+        <div class="fixed-height-list list-group">
+            <a class="list-group-item" (click)="addNewTable()">+ Add a new table</a>
+        </div>
+        <accordion [closeOthers]="true">
+            <accordion-group *ngFor="let table of model.tables" #group [isOpen]="latestTableIdAdded === table.Id">
+                <div accordion-heading>
+                    <button type="button" class="close pull-right remove-list-item" (click)="removeTable(table)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="pull-rigt float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down' : group?.isOpen, 
+                    'glyphicon-chevron-right' : !group?.isOpen}"></i>
+                    <img src="../../assets/vectors/billiard.svg" class="list-icon">
+                    <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
+                </div>
+                <div class="form-group has-feedback" [ngClass]="{'has-success': name.valid, 'has-error': !name.valid}">
+                    <label class="control-label" for="name">Name</label>
+                    <input type="text" autofocus class="form-control" id="name-{{table.Id}}" [(ngModel)]="table.name" name="name-{{table.Id}}"
+                        #name="ngModel" required>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="name.valid" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!name.valid" aria-hidden="true"></span>
+                </div>
+
+                <div class="form-group has-feedback" [ngClass]="{'has-success': hourlyRate.valid, 'has-error': !hourlyRate.valid}">
+                    <label class="control-label" for="hourlyRate">Hourly Rate</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">{{ currencySymbol }}</span>
+                        <input type="text" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="hourlyRate-{{table.Id}}" [(ngModel)]="table.hourlyRate"
+                            name="hourlyRate-{{table.Id}}" #hourlyRate="ngModel" required>
+                    </div>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="hourlyRate.valid" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!hourlyRate.valid" aria-hidden="true"></span>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+
+    <div [ngClass]="footerClass">
+        <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid">Add Event</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="resetForm(); onCancelForm.emit()">Cancel</button>
+    </div>
+</form>
