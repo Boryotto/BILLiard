@@ -7,6 +7,7 @@ import { GameEvent } from "../../models/game-event.model";
 import { TableActivity } from "../../models/table-activity.model";
 import { IDGeneratorService } from "../storage/id-generator.service";
 import { LocalDataStorerService } from "../storage/local-data-storer.service";
+import { TableMoveStatus } from "../../models/table-move-status.enum";
 
 @Injectable()
 export class GameActionsService {
@@ -30,6 +31,18 @@ export class GameActionsService {
         event.tableActivities.push(new TableActivity(this.IDGenerator.generateId(), table, new Date(), null));
         this.dataStorer.storeGameEvent(event);
         this.dataStorer.storeTable(table);
+    }
+
+    public moveTable(source: Table, destination: Table, event: GameEvent) {
+        event.tableRecords.filter(record => record.table.Id === source.Id && record.end == undefined)
+            .forEach(record => {
+                let newRecord = new TableRecord(this.IDGenerator.generateId(), destination, record.player, new Date(), null);
+                event.tableRecords.push(newRecord);
+            });
+        destination.moveStatus = TableMoveStatus.TARGET;
+        source.moveStatus = TableMoveStatus.SOURCE;
+        this.closeTable(source, event);
+        this.openTable(destination, event);
     }
 
 }

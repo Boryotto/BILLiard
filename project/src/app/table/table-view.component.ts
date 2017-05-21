@@ -86,4 +86,14 @@ export class TableViewComponent implements OnInit {
         }
     }
 
+    private onTableFormSubmitted(newTable: Table) {
+        if (newTable != undefined) {
+            console.debug(`a new table was submitted with id: ${newTable.Id}`)
+            this.event.tables.push(newTable);
+            this.gameActions.moveTable(this.table, newTable, this.event);
+            console.debug(`The table ${this.table.Id} was moved to a new table with id: ${newTable.Id}`)
+            this.dataStorer.storeGameEvent(this.event);            
+        }
+    }
+
 }
