@@ -7,6 +7,7 @@ import { GameEvent } from "../../models/game-event.model";
 import { Player } from "../../models/player.model";
 import { Table } from "../../models/table.model";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
+import { TableActivity } from "../../models/table-activity.model";
 
 @Component({
     selector: 'event-form',
@@ -29,7 +30,11 @@ export class EventFormComponent implements OnInit {
 
     onSubmit() {
         this.model.start = new Date();
-        this.model.tables.forEach(table => table.start = new Date());
+        this.model.tables.forEach(table => {
+            table.start = new Date();
+            let newTableActivity = new TableActivity(this.IDGenerator.generateId(), table, new Date(), null);
+            this.model.tableActivities.push(newTableActivity);
+        });
         this.onSubmitEvent.emit(this.model);
         this.resetForm();
     }
@@ -48,6 +53,7 @@ export class EventFormComponent implements OnInit {
             [],
             [],
             0,
+            [],
             [],
             [],
             null,

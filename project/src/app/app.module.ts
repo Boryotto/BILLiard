@@ -8,6 +8,8 @@ import { appRoutes } from './app.routes';
 // Services
 import { LocalDataStorerService } from "./services/storage/local-data-storer.service";
 import { IDGeneratorService } from "./services/storage/id-generator.service";
+import { GameCalculationsService } from "./services/game/game-calculations.service";
+import { GameActionsService } from "./services/game/game-actions.service";
 
 // Components
 import { AppComponent } from './app.component';
@@ -28,7 +30,7 @@ import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-f
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
 import { AccordionModule } from 'ngx-bootstrap';
-import { GameCalculationsService } from "./services/game/game-calculations.service";
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { GameCalculationsService } from "./services/game/game-calculations.servi
     BrowserModule,
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
+    BsDropdownModule.forRoot(),
     FormsModule
   ],
   declarations: [
@@ -59,7 +62,8 @@ import { GameCalculationsService } from "./services/game/game-calculations.servi
   providers: [
     LocalDataStorerService,
     IDGeneratorService,
-    GameCalculationsService
+    GameCalculationsService,
+    GameActionsService
   ]
 })
 export class AppModule { }

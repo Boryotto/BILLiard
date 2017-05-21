@@ -9,6 +9,7 @@ import { GameCalculationsService } from "../services/game/game-calculations.serv
 import { Player } from "../models/player.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
 import { TableRecord } from "../models/table-record.model";
+import { GameActionsService } from "../services/game/game-actions.service";
 
 
 @Component({
@@ -32,8 +33,8 @@ export class TableViewComponent implements OnInit {
         private route: ActivatedRoute,
         private dataStorer: LocalDataStorerService,
         private gameCalculator: GameCalculationsService,
-        private IDGenerator: IDGeneratorService
-
+        private IDGenerator: IDGeneratorService,
+        private gameActions: GameActionsService
     ) { }
 
     ngOnInit(): void {
@@ -46,6 +47,7 @@ export class TableViewComponent implements OnInit {
 
         this.dataStorer.getGameEvent(this.eventId).then(event => this.event = event).then(() => {
             this.table = this.event.tables.find(table => table.Id === this.tableId);
+            console.log(this.event)
         });
     }
 

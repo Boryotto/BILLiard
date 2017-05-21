@@ -11,6 +11,8 @@ import { TableMovement } from "../models/table-movement.model";
 import { TableRecord } from "../models/table-record.model";
 import { config } from '../config';
 import { GameCalculationsService } from "../services/game/game-calculations.service";
+import { TableActivity } from "../models/table-activity.model";
+import { IDGeneratorService } from "../services/storage/id-generator.service";
 
 @Component({
   selector: 'event',
@@ -30,6 +32,7 @@ export class EventComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dataStorer: LocalDataStorerService,
+    private IDGenerator: IDGeneratorService,
     private gameCalculator: GameCalculationsService
   ) { }
 
@@ -76,11 +79,12 @@ export class EventComponent implements OnInit {
       this.dataStorer.storeGameEvent(this.event);
     }
   }
-  
+
   private onTableFormSubmitted(newTable: Table) {
     if (newTable != undefined) {
       console.debug(`a new table was submitted with id: ${newTable.Id}`)
       this.event.tables.push(newTable);
+      this.event.tableActivities.push(new TableActivity(this.IDGenerator.generateId(), newTable, new Date(), null));
       console.debug(`Storing the game event (id: ${this.event.Id}) with the new table`);
       this.dataStorer.storeGameEvent(this.event);
     }

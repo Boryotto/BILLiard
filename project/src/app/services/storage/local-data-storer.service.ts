@@ -9,6 +9,7 @@ import { MiscItem } from "../../models/misc-item.model";
 import { TableRecord } from "../../models/table-record.model";
 import { TableMovement } from "../../models/table-movement.model";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
+import { TableActivity } from "../../models/table-activity.model";
 
 @Injectable()
 export class LocalDataStorerService implements IDataStorer {
@@ -16,6 +17,9 @@ export class LocalDataStorerService implements IDataStorer {
     getAllGameEvents(): Promise<GameEvent[]> {
         return new Promise<GameEvent[]>((resolve, reject) => {
             let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey))
+            if (eventIds == null) {
+                resolve([]);
+            }
             this.resolveObjectArray<GameEvent>(eventIds, this.getGameEvent).then(gameEvents => resolve(gameEvents));
         });
     }
@@ -49,10 +53,12 @@ export class LocalDataStorerService implements IDataStorer {
             let players: Player[] = [];
             let movements: TableMovement[] = [];
             let tableRecords: TableRecord[] = [];
+            let tableActivities: TableActivity[] = [];
             this.resolveObjectArray<Table>(storedData.tableIds, this.getTable).then(resolvedTables => tables = resolvedTables)
                 .then(() => this.resolveObjectArray<Player>(storedData.playerIds, this.getPlayer)).then(resolvedPlayers => players = resolvedPlayers)
                 .then(() => this.resolveObjectArray<TableMovement>(storedData.movementIds, this.getTableMovement).then(resolvedTableMovements => movements = resolvedTableMovements))
                 .then(() => this.resolveObjectArray<TableRecord>(storedData.tableRecordIds, this.getTableRecord).then(resolvedTableRecords => tableRecords = resolvedTableRecords))
+                .then(() => this.resolveObjectArray<TableActivity>(storedData.tableActivityIds, this.getTableActivity).then(resolvedTableActivities => tableActivities = resolvedTableActivities))
                 .then(() => {
                     resolve(new GameEvent(
                         eventId,
@@ -62,6 +68,7 @@ export class LocalDataStorerService implements IDataStorer {
                         storedData.hourlyRate,
                         movements,
                         tableRecords,
+                        tableActivities,
                         storedData.start == undefined ? null : new Date(storedData.start),
                         storedData.end == undefined ? null : new Date(storedData.end)
                     ))
@@ -92,6 +99,13 @@ export class LocalDataStorerService implements IDataStorer {
             tableRecordIds.push(tableRecord.Id);
             this.storeTableRecord(tableRecord);
         });
+
+        let tableActivityIds: number[] = [];
+        event.tableActivities.forEach(tableActivity => {
+            tableActivityIds.push(tableActivity.Id);
+            this.storeTableActivity(tableActivity);
+        });
+
         let storableData: any = {
             Id: event.Id,
             name: event.name,
@@ -100,6 +114,7 @@ export class LocalDataStorerService implements IDataStorer {
             hourlyRate: event.hourlyRate,
             movementIds: movementIds,
             tableRecordIds: tableRecordIds,
+            tableActivityIds: tableActivityIds,
             start: event.start,
             end: event.end
         }
@@ -199,6 +214,7 @@ export class LocalDataStorerService implements IDataStorer {
             });
         });
     }
+
     storeTableRecord(record: TableRecord): void {
         let storableData: Object = {
             Id: record.Id,
@@ -209,6 +225,31 @@ export class LocalDataStorerService implements IDataStorer {
         }
         localStorage.setItem(`${record.Id}`, JSON.stringify(storableData));
     }
+
+    getTableActivity(activityId: number): Promise<TableActivity> {
+        return new Promise<TableActivity>((resolve, reject) => {
+            let storedData = JSON.parse(localStorage.getItem(`${activityId}`));
+            if (storedData == undefined) {
+                reject(`Item with the id: ${activityId} was not found`);
+            }
+            let table: Table;
+            this.getTable(storedData.tableId).then(resolvedTable => {
+                table = resolvedTable;
+                resolve(new TableActivity(activityId, table, storedData.start == undefined ? null : new Date(storedData.start), storedData.end == undefined ? null : new Date(storedData.end)));
+            });
+        });
+    }
+
+    storeTableActivity(tableActivity: TableActivity) {
+        let storableData: any = {
+            Id: tableActivity.Id,
+            tableId: tableActivity.table.Id,
+            start: tableActivity.start,
+            end: tableActivity.end
+        }
+        localStorage.setItem(`${tableActivity.Id}`, JSON.stringify(storableData));
+    }
+
 
     getTableMovement(movementId: number): Promise<TableMovement> {
         return new Promise<TableMovement>((resolve, reject) => {

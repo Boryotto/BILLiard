@@ -36,26 +36,37 @@ export class BillDisplayerComponent implements OnInit {
         else if (this.player != undefined && this.event != undefined) {
             this.currentBill = this.calculatePlayerBill(this.player);
         }
+        else if (this.table != undefined && this.event != undefined) {
+            this.currentBill = this.calculateTableBill(this.table, this.event);
+        }
         else if (this.event != undefined) {
             this.currentBill = this.calculateEventBill(this.event);
-        } else if (this.table != undefined) {
-            this.currentBill = this.calculateTableBill(this.table);
         }
     }
 
     private calculateEventBill(event: GameEvent): number {
         let subBill: number = 0;
         for (let currentTable of event.tables) {
-            subBill += this.calculateTableBill(currentTable);
+            subBill += this.calculateTableBill(currentTable, event);
         }
+        event.players.forEach(currentPlayer => {
+            currentPlayer.miscItems.forEach(item => subBill += item.price);
+        });
         return subBill;
     }
 
-    private calculateTableBill(table: Table): number {
+    private calculateTableBill(table: Table, event: GameEvent): number {
         if (table.start == undefined) {
             return 0;
         }
-        let leaseTimeMillis: number = new Date().getTime() - table.start.getTime();
+        let leaseTimeMillis: number = 0;
+        event.tableActivities.filter(activity => activity.table.Id === table.Id).forEach(activity => {
+            if (activity.end != undefined) {
+                leaseTimeMillis += activity.end.getTime() - activity.start.getTime();
+            } else {
+                leaseTimeMillis += new Date().getTime() - activity.start.getTime();
+            }
+        });
         return (leaseTimeMillis / 3600000) * table.hourlyRate;
     }
 

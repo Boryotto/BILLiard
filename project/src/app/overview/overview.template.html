@@ -2,15 +2,15 @@
     <div class="jumbotron">
         <div class="container">
             <h1 id="jumbotron-title">
-                Events Overview <br>
+                Games Overview <br>
             </h1>
         </div>
     </div>
 
 
     <section id="info-view" class="page-section">
-        <h3>Events</h3>
-        <div class="text-center">
+        <h3>Game Events</h3>
+        <div class="square-tiles-container text-center">
             <div class="col-xs-6" *ngFor="let event of events">
                 <div class="well">
                     <h2 [routerLink]="['event',event.Id]"> {{ event.name }}</h2>
@@ -30,10 +30,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title pull-left">Add a new Event</h4>
+                    <h4 class="modal-title pull-left">Add a new Game</h4>
                     <button type="button" class="close pull-right" (click)="eventForm.resetForm();newEventModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <event-form #eventForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onEventFormSubmitted($event); newEventModal.hide()"
                     (onCancelForm)="newEventModal.hide()"></event-form>

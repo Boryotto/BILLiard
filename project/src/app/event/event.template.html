@@ -21,7 +21,7 @@
           <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="isEditingName = true"></span>
         </span>
         <br>
-        <small id="jumbotron-subtitle">Event</small> <br>
+        <small id="jumbotron-subtitle">Game Event</small> <br>
         <small id="jumbotron-subtitle">{{ event.start | date:"EEEE, d/M/y"}}</small>
       </h1>
     </div>
@@ -41,7 +41,7 @@
       </div>
       <div class="col-xs-8">
         <h2>
-          <bill [interval]=1000 [player]=player [event]=event></bill>
+          <bill [interval]=1000 [event]=event></bill>
         </h2>
         <h4>Total Bill</h4>
       </div>
@@ -55,7 +55,6 @@
   <hr>
   <section id="tables-view" class="page-section">
     <h3>Tables</h3>
-    <h4 class="text-center" *ngIf="event.tables.length === 0">No tables to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="list-group-item" (click)="newTableModal.show()">+ Add a new table</a>
       <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['table',table.Id]">
@@ -68,7 +67,7 @@
 
         <span>
       <img src="../../assets/vectors/coins.svg" class="list-icon">
-        <bill [interval]=1000 [table]=table ></bill>
+        <bill [interval]=1000 [table]=table [event]="event" ></bill>
       </span>
         <span>
       <img src="../../assets/vectors/clock.svg" class="list-icon">
@@ -78,11 +77,11 @@
         <span> {{ gameCalculator.calculatePlayersOnTable(table, event) }}</span>
       </a>
     </div>
+    <h4 class="text-center" *ngIf="event.tables.length === 0">No tables to display.</h4>
   </section>
   <hr>
   <section id="players-view" class="page-section">
     <h3>Players</h3>
-    <h4 class="text-center" *ngIf="event.players.length === 0">No players to display.</h4>
     <div class="fixed-height-list list-group">
       <a class="list-group-item" (click)="newPlayerModal.show()">+ Add a new player</a>
       <a class="player-list-item list-group-item" *ngFor="let player of event.players" [routerLink]="['player',player.Id]">
@@ -104,6 +103,7 @@
       </span>
       </a>
     </div>
+    <h4 class="text-center" *ngIf="event.players.length === 0">No players to display.</h4>
   </section>
 
   <!--Add player modal-->

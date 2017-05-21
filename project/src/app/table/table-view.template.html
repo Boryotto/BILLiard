@@ -2,8 +2,21 @@
     <div class="jumbotron">
         <div class="container">
             <a [routerLink]="['../..']" class="back-button">
-        <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to event
-      </a>
+                <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to event
+            </a>
+            <div class="btn-group pull-right" dropdown>
+                <button type="button" class="btn btn-warning" *ngIf="table.isOpen" (click)="gameActions.closeTable(table, event)">Close Table</button>
+                <button type="button" class="btn btn-success" *ngIf="!table.isOpen" (click)="gameActions.openTable(table, event)">Open Table</button>
+                <button type="button" dropdownToggle class="btn btn-success dropdown-toggle dropdown-toggle-split">
+                    <span class="caret"></span>
+                    <span class="sr-only">Dropdown toggle button</span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem">
+                        <a href="" class="dropdown-item">Move Table</a>
+                    </li>
+                </ul>
+            </div>
             <h1 id="jumbotron-title">
                 <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #tableNameForm="ngForm">
                     <div class="input-group">
@@ -49,7 +62,7 @@
             </div>
             <div class="col-xs-7">
                 <h2>
-                    <bill [interval]=1000 [table]=table></bill>
+                    <bill [interval]=1000 [table]=table [event]="event"></bill>
                 </h2>
                 <h4>Total Bill</h4>
             </div>
@@ -59,7 +72,7 @@
     <section id="tables-view" class="page-section" *ngIf="event">
         <h3>Players</h3>
         <div class="fixed-height-list list-group">
-            <a class="list-group-item" (click)="playerPickerModal.show()">+ Add a player</a>
+            <a class="list-group-item" (click)="table.isOpen && playerPickerModal.show()" [ngClass]="{'disabled': !table.isOpen}">+ Add a player</a>
             <a class="list-group-item" *ngFor="let player of gameCalculator.getPlayersOnTable(table, event)">
             <button type="button" class="close pull-right remove-list-item" (click)="onRemovePlayingPlayer(player)" aria-label="Close">
             <span aria-hidden="true">&times;</span>
