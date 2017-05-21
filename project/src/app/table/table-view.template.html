@@ -15,6 +15,9 @@
                     <li role="menuitem">
                         <a (click)="newTableModal.show()" class="dropdown-item">Move Table</a>
                     </li>
+                    <li role="menuitem">
+                        <a class="dropdown-item">Delete Table</a>
+                    </li>
                 </ul>
             </div>
             <h1 id="jumbotron-title">
@@ -116,21 +119,21 @@
     </div>
 
     <!--Move table modal-->
-  <div bsModal #newTableModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTableModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title pull-left">Move to a new table</h4>
-          <button type="button" class="close pull-right" (click)="tableForm.resetForm();newTableModal.hide()" aria-label="Close">
+    <div bsModal #newTableModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTableModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Move to a new table</h4>
+                    <button type="button" class="close pull-right" (click)="tableForm.resetForm();newTableModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+                </div>
+                <table-form #tableForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); newTableModal.hide()"
+                    (onCancelForm)="newTableModal.hide()" [defaultHourlyRate]="event.hourlyRate"></table-form>
+            </div>
         </div>
-        <table-form #tableForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); newTableModal.hide()"
-          (onCancelForm)="newTableModal.hide()" [defaultHourlyRate]="event.hourlyRate"></table-form>
-      </div>
     </div>
-  </div>
 
 
 </section>
