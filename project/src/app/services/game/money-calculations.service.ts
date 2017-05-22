@@ -7,7 +7,7 @@ import { GameEvent } from "../../models/game-event.model";
 
 @Injectable()
 export class MoneyCalculationsService {
-    
+
     public calculateEventBill(event: GameEvent): number {
         let subBill: number = 0;
         for (let currentTable of event.tables) {
@@ -34,7 +34,7 @@ export class MoneyCalculationsService {
         return (leaseTimeMillis / 3600000) * table.hourlyRate;
     }
 
-    public calculatePlayerTableBill(player: Player, table: Table,event: GameEvent): number {
+    public calculatePlayerTableBill(player: Player, table: Table, event: GameEvent): number {
         let records: TableRecord[] = event.tableRecords.filter(record =>
             record.player.Id === player.Id
             && record.table.Id === table.Id
@@ -67,5 +67,17 @@ export class MoneyCalculationsService {
         }
         player.miscItems.forEach(item => total += +item.price);
         return total;
+    }
+
+    public calculateTableRecordBill(tableRecord: TableRecord): number {
+        let millis: number = 0;
+        let start: Date = new Date(tableRecord.start);
+        let end: Date = new Date(tableRecord.end);
+        if (end != undefined) {
+            millis += end.getTime() - start.getTime();
+        } else {
+            millis += new Date().getTime() - start.getTime();
+        }
+        return (millis / 3600000) * tableRecord.table.hourlyRate;
     }
 }
