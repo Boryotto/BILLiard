@@ -22,16 +22,16 @@ export class TimerComponent implements OnInit {
     private currentDate: Date;
 
     ngOnInit(): void {
-        if (this.start == undefined) {
-            this.currentDate = new Date(0);
-            this.active = false;
+        if (this.start == undefined) { // If start is not defined, start the timer from this second
+            this.currentDate = new Date();
+            this.active = true;
         } else {
             this.currentDate = new Date(this.start);
             if (this.difference) {
                 this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
             }
+            this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset
         }
-        this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset
         setInterval(() => {
             if (this.active) {
                 this.currentDate = new Date(this.currentDate.getTime() + this.interval);
