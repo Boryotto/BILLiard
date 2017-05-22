@@ -67,8 +67,12 @@ export class GameCalculationsService {
                 }
                 totalTime = new Date(totalTime.getTime() + playTime.getTime());
             });
-        
+
         return totalTime;
+    }
+
+    public getTableRecordsForPlayer(player: Player, event: GameEvent): TableRecord[] {
+        return event.tableRecords.filter(record => record.player.Id === player.Id);
     }
 
 }
