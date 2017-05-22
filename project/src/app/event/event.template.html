@@ -4,6 +4,22 @@
       <a [routerLink]="['']" class="back-button">
         <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to overview
       </a>
+      <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-warning" *ngIf="!event.end">Close Event</button>
+        <button type="button" class="btn btn-success" *ngIf="event.end">Reopen Event</button>
+        <button type="button" dropdownToggle class="btn btn-success dropdown-toggle dropdown-toggle-split">
+                    <span class="caret"></span>
+                    <span class="sr-only">Dropdown toggle button</span>
+                </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <a [routerLink]="['bill']" class="dropdown-item">Display Bill</a>
+          </li>
+          <li role="menuitem">
+            <a class="dropdown-item">Delete Event</a>
+          </li>
+        </ul>
+      </div>
       <h1 id="jumbotron-title">
         <form *ngIf="isEditingName" (ngSubmit)="onChangeName()" #eventNameForm="ngForm">
           <div class="input-group">
@@ -59,7 +75,10 @@
       <a class="list-group-item" (click)="!event.end && newTableModal.show()" [ngClass]="{'disabled': event.end}">+ Add a new table</a>
       <a class="table-list-item list-group-item" *ngFor="let table of event.tables" [routerLink]="['table',table.Id]">
         <img src="../../assets/vectors/billiard.svg" class="list-icon">
-        <h4 class="inline-heading list-group-item-heading">{{ table.name }}</h4>
+        <h4 class="inline-heading list-group-item-heading">
+          {{ table.name }}
+          <small *ngIf="table.moveStatus == 1">moved table</small>
+        </h4>
         <span class="table-link glyphicon glyphicon-new-window"></span>
         <br>
         <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
