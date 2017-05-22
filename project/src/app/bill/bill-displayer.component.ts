@@ -17,6 +17,7 @@ export class BillDisplayerComponent implements OnInit {
     @Input() private event: GameEvent;
     @Input() private player: Player;
     @Input() private interval: number;
+    @Input() private bill: number;
 
     private currentBill: number;
     private currencyISOCode: string;
@@ -33,7 +34,10 @@ export class BillDisplayerComponent implements OnInit {
     }
 
     private updateTotalBill() {
-        if (this.player != undefined && this.table != undefined && this.event != undefined) {
+        if (this.bill > -1) {
+            this.currentBill = this.bill;
+        }
+        else if (this.player != undefined && this.table != undefined && this.event != undefined) {
             this.currentBill = this.moneyCalculator.calculatePlayerTableBill(this.player, this.table, this.event);
         }
         else if (this.player != undefined && this.event != undefined) {
