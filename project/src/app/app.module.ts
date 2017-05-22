@@ -10,6 +10,7 @@ import { LocalDataStorerService } from "./services/storage/local-data-storer.ser
 import { IDGeneratorService } from "./services/storage/id-generator.service";
 import { GameCalculationsService } from "./services/game/game-calculations.service";
 import { GameActionsService } from "./services/game/game-actions.service";
+import { MoneyCalculationsService } from "./services/game/money-calculations.service";
 
 // Components
 import { AppComponent } from './app.component';
@@ -63,7 +64,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
     LocalDataStorerService,
     IDGeneratorService,
     GameCalculationsService,
-    GameActionsService
+    GameActionsService,
+    MoneyCalculationsService,
   ]
 })
 export class AppModule { }
