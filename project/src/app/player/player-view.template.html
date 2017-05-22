@@ -64,7 +64,7 @@
         <br>
         <span>
           <img src="../../assets/vectors/coins.svg" class="list-icon">
-          {{ item.price | currency:currencyISOCode:true:'1.2-2' }}
+          <bill [bill]="item.price"></bill>
         </span>
         <span>
           <img src="../../assets/vectors/clock.svg" class="list-icon">

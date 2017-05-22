@@ -33,7 +33,6 @@ export class BillViewComponent implements OnInit {
 
     private eventId: number;
     private event: GameEvent;
-    private currencyISOCode: string = config.currencyISOCode;
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {

@@ -25,7 +25,6 @@ export class PlayerViewComponent implements OnInit {
     private eventId: number;
     private event: GameEvent;
 
-    private currencyISOCode: string;
     private isEditingName: boolean;
     private enteredPlayerName: string;
 
@@ -37,8 +36,6 @@ export class PlayerViewComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-
-        this.currencyISOCode = config.currencyISOCode;
         this.isEditingName = false;
 
         this.route.params.subscribe(params => {

@@ -23,7 +23,6 @@ export class EventComponent implements OnInit {
 
   private eventId: number; // The event's Id
   private event: GameEvent;
-  private currencyISOCode: string = config.currencyISOCode;
 
   private isEditingName: boolean;
   private enteredEventName: string;

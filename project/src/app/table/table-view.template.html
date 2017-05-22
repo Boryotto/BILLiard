@@ -45,7 +45,9 @@
         <h3>Info</h3>
         <div class="horizontal-list horizontal-list-centered text-center">
             <div class="col-xs-5">
-                <h2>{{ table.hourlyRate | currency:currencyISOCode:true:'1.2-2' }}</h2>
+                <h2>
+                    <bill [bill]="table.hourlyRate"></bill>
+                </h2>
                 <h4>Hourly Rate</h4>
             </div>
             <div class="col-xs-4">
