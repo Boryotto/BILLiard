@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { config } from '../config';
 import { Table } from "../models/table.model";
 import { GameEvent } from "../models/game-event.model";
@@ -11,7 +11,7 @@ import { MoneyCalculationsService } from "../services/game/money-calculations.se
     selector: 'bill',
     template: "{{ currentBill | currency:currencyISOCode:true:'1.2-2' }}"
 })
-export class BillDisplayerComponent implements OnInit {
+export class BillDisplayerComponent implements OnInit, OnDestroy {
 
     @Input() private table: Table;
     @Input() private event: GameEvent;
@@ -21,6 +21,7 @@ export class BillDisplayerComponent implements OnInit {
 
     private currentBill: number;
     private currencyISOCode: string;
+    private intervalToken: NodeJS.Timer;
 
     constructor(private moneyCalculator: MoneyCalculationsService) { }
 
@@ -28,9 +29,13 @@ export class BillDisplayerComponent implements OnInit {
         this.currencyISOCode = config.currencyISOCode;
         this.updateTotalBill();
 
-        setInterval(() => {
+        this.intervalToken = setInterval(() => {
             this.updateTotalBill();
         }, this.interval);
+    }
+
+    ngOnDestroy(): void {
+        clearInterval(this.intervalToken);
     }
 
     private updateTotalBill() {

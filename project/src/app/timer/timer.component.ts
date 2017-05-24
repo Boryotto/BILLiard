@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
     </span>
     `
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnInit, OnDestroy {
 
     @Input() private start: Date;
     @Input() private active: boolean;
@@ -20,24 +20,34 @@ export class TimerComponent implements OnInit {
     @Input() private displayDays: boolean;
 
     private currentDate: Date;
+    private intervalToken: NodeJS.Timer;
 
     ngOnInit(): void {
-        if (this.start == undefined) { // If start is not defined, start the timer from this second
-            this.currentDate = new Date();
+        this.currentDate = new Date();
+        if (this.start == undefined) {
             this.active = true;
         } else {
             this.currentDate = new Date(this.start);
             if (this.difference) {
                 this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
             }
-            this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset
+            this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset            
         }
-        setInterval(() => {
+
+        if (this.interval == undefined || this.interval === 0) {
+            this.interval = 1000;
+        }
+
+        this.intervalToken = setInterval(() => {
             if (this.active) {
                 this.currentDate = new Date(this.currentDate.getTime() + this.interval);
             }
         }, this.interval);
 
+    }
+
+    ngOnDestroy(): void {
+        clearInterval(this.intervalToken);
     }
 
     private calculateDayCount(date: Date): number {
