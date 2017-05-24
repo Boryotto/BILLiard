@@ -1,0 +1,4 @@
+<div [ngClass]="footerClass">
+    <button type="submit" class="btn btn-success" (click)="onConfirmEvent.emit()">Confirm</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancelEvent.emit()">Cancel</button>
+</div>

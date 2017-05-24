@@ -13,6 +13,7 @@ import { config } from '../config';
 import { GameCalculationsService } from "../services/game/game-calculations.service";
 import { TableActivity } from "../models/table-activity.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
+import { GameActionsService } from "../services/game/game-actions.service";
 
 @Component({
   selector: 'event',
@@ -32,7 +33,8 @@ export class EventComponent implements OnInit {
     private router: Router,
     private dataStorer: LocalDataStorerService,
     private IDGenerator: IDGeneratorService,
-    private gameCalculator: GameCalculationsService
+    private gameCalculator: GameCalculationsService,
+    private gameActions: GameActionsService
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +69,14 @@ export class EventComponent implements OnInit {
       this.event.tableActivities.push(new TableActivity(this.IDGenerator.generateId(), newTable, new Date(), null));
       console.debug(`Storing the game event (id: ${this.event.Id}) with the new table`);
       this.dataStorer.storeGameEvent(this.event);
+    }
+  }
+
+  private onConfirmation() {
+    if (this.event.end) {
+      this.gameActions.openEvent(this.event);
+    } else {
+      this.gameActions.closeEvent(this.event);
     }
   }
 

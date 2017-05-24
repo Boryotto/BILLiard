@@ -47,4 +47,25 @@ export class GameActionsService {
         this.openTable(destination, event);
     }
 
+    public closeEvent(event: GameEvent) {
+        event.tables.forEach(table => this.closeTable(table, event));
+        // Make sure all table records are closed.
+        event.tableRecords.filter(record => record.end == undefined).forEach(record => record.end = new Date());
+        event.end = new Date();
+        this.dataStorer.storeGameEvent(event);        
+    }
+
+    public openEvent(event: GameEvent) {
+        event.end = null;
+        event.tables.forEach(table => {
+            table.end = null;
+            table.isOpen = true;
+        });
+        this.dataStorer.storeGameEvent(event);                
+    }
+
+    public deleteEvent(event: GameEvent) {
+        
+    }
+
 }

@@ -5,14 +5,17 @@
         <img src="../../assets/vectors/back-arrow.svg" class="list-icon"> Return to overview
       </a>
       <div class="btn-group pull-right" dropdown>
-        <button type="button" class="btn btn-warning" *ngIf="!event.end">Close Event</button>
-        <button type="button" class="btn btn-success" *ngIf="event.end">Reopen Event</button>
+        <button type="button" class="btn btn-warning" *ngIf="!event.end" (click)="confirmationModal.show()">Close Event</button>
+        <button type="button" class="btn btn-success" *ngIf="event.end" [routerLink]="['bill']">Display Bill</button>
         <button type="button" dropdownToggle class="btn btn-success dropdown-toggle dropdown-toggle-split">
                     <span class="caret"></span>
                     <span class="sr-only">Dropdown toggle button</span>
                 </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
-          <li role="menuitem">
+          <li role="menuitem" *ngIf="event.end">
+            <a (click)="confirmationModal.show()" class="dropdown-item">Reopen Event</a>
+          </li>
+          <li role="menuitem" *ngIf="!event.end">
             <a [routerLink]="['bill']" class="dropdown-item">Display Bill</a>
           </li>
           <li role="menuitem">
@@ -79,7 +82,7 @@
           {{ table.name }}
           <small *ngIf="table.moveStatus == 1">moved table</small>
         </h4>
-        <span class="table-link glyphicon glyphicon-new-window"></span>
+        <span class="table-link glyphicon glyphicon-chevron-right"></span>
         <br>
         <span *ngIf="table.isOpen" class="table-status label label-success">Open</span>
         <span *ngIf="!table.isOpen" class="table-status label label-default">Closed</span>
@@ -106,7 +109,7 @@
       <a class="player-list-item list-group-item" *ngFor="let player of event.players" [routerLink]="['player',player.Id]">
         <img src="../../assets/vectors/player.svg" class="list-icon">
         <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
-        <span class="table-link glyphicon glyphicon-new-window"></span>
+        <span class="table-link glyphicon glyphicon-chevron-right"></span>
         <br>
 
         <span *ngIf="gameCalculator.isPlayerPlaying(player, event)" class="table-status label label-success">Playing</span>
@@ -155,6 +158,23 @@
         </div>
         <table-form #tableForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); newTableModal.hide()"
           (onCancelForm)="newTableModal.hide()" [defaultHourlyRate]="event.hourlyRate"></table-form>
+      </div>
+    </div>
+  </div>
+
+  <!--Confirmation modal-->
+  <div bsModal #confirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Would you like to contine?</h4>
+          <button type="button" class="close pull-right" (click)="confirmation.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <confirmation-form #confirmationForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onConfirmEvent)="confirmationModal.hide(); onConfirmation()"
+          (onCancelEvent)="confirmationModal.hide()"></confirmation-form>
       </div>
     </div>
   </div>

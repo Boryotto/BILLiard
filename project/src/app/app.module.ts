@@ -28,6 +28,7 @@ import { EventFormComponent } from "./forms/event/event-form.component";
 import { TableFormComponent } from "./forms/table/table-form.component";
 import { PlayerPickerFormComponent } from "./forms/player-picker/player-picker-form.component";
 import { BillViewComponent } from "./bill/bill-view.component";
+import { ConfirmationFormComponent } from "./forms/confirmation/confirmation-form.component";
 
 // 3d party
 import { ModalModule } from 'ngx-bootstrap';
@@ -59,7 +60,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
     TableFormComponent,
     EventFormComponent,
     OverviewComponent,
-    BillViewComponent
+    BillViewComponent,
+    ConfirmationFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [
