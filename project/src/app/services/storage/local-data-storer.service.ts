@@ -35,6 +35,17 @@ export class LocalDataStorerService implements IDataStorer {
         localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
     }
 
+    private removeEventFromEventList(event: GameEvent) {
+        let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
+        if (!eventIds) {
+            eventIds = [];
+        }
+        if (!eventIds.find(id => id === event.Id)) {
+            eventIds = eventIds.filter(id => id !== event.Id);
+        }
+        localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
+    }
+
     private resolveObjectArray<T>(objectIds: number[], resolveFunction: any): Promise<T[]> {
         let promises: Promise<T>[] = [];
         objectIds.forEach(Id => promises.push(resolveFunction.call(this, Id) as Promise<T>));
@@ -122,6 +133,17 @@ export class LocalDataStorerService implements IDataStorer {
         this.addEventToEventList(event);
     }
 
+    removeGameEvent(event: GameEvent): void {
+        localStorage.removeItem(`${event.Id}`);
+        event.tables.forEach(table => this.removeTable(table, event));
+        event.players.forEach(player => this.removePlayer(player, event));
+        event.movements.forEach(movement => this.removeTableMovement(movement, event));
+        event.tableActivities.forEach(activity => this.removeTableActivity(activity, event));
+        event.tableRecords.forEach(record => this.removeTableRecord(record, event));
+
+        this.removeEventFromEventList(event);
+    }
+
     getPlayer(playerId: number): Promise<Player> {
         return new Promise<Player>((resolve, reject) => {
             let storedData = JSON.parse(localStorage.getItem(`${playerId}`));
@@ -154,11 +176,18 @@ export class LocalDataStorerService implements IDataStorer {
         localStorage.setItem(`${player.Id}`, JSON.stringify(storableData));
     }
 
+    removePlayer(player: Player, event: GameEvent) {
+        localStorage.removeItem(`${player.Id}`);
+        event.tableRecords.filter(record => record.player.Id === player.Id).forEach(record => this.removeTableRecord(record, event));
+        player.miscItems.forEach(item => this.removeMiscItem(item, player));
+    }
+
     getTable(tableId: number): Promise<Table> {
         return new Promise<Table>((resolve, reject) => {
 
             let storedData = JSON.parse(localStorage.getItem(`${tableId}`));
             if (storedData == undefined) {
+                console.log(tableId);
                 reject(`Item with the id: ${tableId} was not found`);
             }
             resolve(new Table(
@@ -184,6 +213,15 @@ export class LocalDataStorerService implements IDataStorer {
         localStorage.setItem(`${table.Id}`, JSON.stringify(storableData));
     }
 
+    removeTable(table: Table, event: GameEvent): void {
+        event.tableRecords.filter(record => record.table.Id === table.Id).forEach(record => this.removeTableRecord(record, event));
+        event.tableActivities.filter(activity => activity.table.Id === table.Id).forEach(activity => this.removeTableActivity(activity, event));
+        event.tables = event.tables.filter(currentTable => currentTable.Id !== table.Id);
+        localStorage.removeItem(`${table.Id}`);
+        console.log(table);
+        console.log(event);
+    }
+
     getMiscItem(itemId: number): Promise<MiscItem> {
         return new Promise<MiscItem>((resolve, reject) => {
             let storedData = JSON.parse(localStorage.getItem(`${itemId}`));
@@ -195,6 +233,11 @@ export class LocalDataStorerService implements IDataStorer {
     }
     storeMiscItem(item: MiscItem): void {
         localStorage.setItem(`${item.Id}`, JSON.stringify(item));
+    }
+
+    removeMiscItem(miscItem: MiscItem, player: Player): void {
+        localStorage.removeItem(`${miscItem.Id}`);
+        player.miscItems = player.miscItems.filter(item => item.Id !== miscItem.Id);
     }
 
     getTableRecord(recordId: number): Promise<TableRecord> {
@@ -226,6 +269,11 @@ export class LocalDataStorerService implements IDataStorer {
         localStorage.setItem(`${record.Id}`, JSON.stringify(storableData));
     }
 
+    removeTableRecord(record: TableRecord, event: GameEvent): void {
+        localStorage.removeItem(`${record.Id}`);
+        event.tableRecords = event.tableRecords.filter(currentRecord => currentRecord.Id !== record.Id);
+    }
+
     getTableActivity(activityId: number): Promise<TableActivity> {
         return new Promise<TableActivity>((resolve, reject) => {
             let storedData = JSON.parse(localStorage.getItem(`${activityId}`));
@@ -250,6 +298,11 @@ export class LocalDataStorerService implements IDataStorer {
         localStorage.setItem(`${tableActivity.Id}`, JSON.stringify(storableData));
     }
 
+    removeTableActivity(tableActivity: TableActivity, event: GameEvent): void {
+        localStorage.removeItem(`${tableActivity.Id}`);
+        event.tableActivities = event.tableActivities.filter(currentActivity => currentActivity.Id !== tableActivity.Id);
+    }
+
 
     getTableMovement(movementId: number): Promise<TableMovement> {
         return new Promise<TableMovement>((resolve, reject) => {
@@ -264,17 +317,23 @@ export class LocalDataStorerService implements IDataStorer {
                 return this.getTable(storedData.tableDestinationId);
             }).then(resolvedTableDestination => {
                 tableDestination = resolvedTableDestination;
-                resolve(new TableMovement(movementId, tableSource, tableDestination, storedData.date));
+                resolve(new TableMovement(movementId, tableSource, tableDestination, storedData.date == undefined ? null : new Date(storedData.date)));
             });
         });
     }
+
     storeTableMovement(movement: TableMovement): void {
-        let storableData: Object = {
+        let storableData: any = {
             Id: movement.Id,
-            tableSourceId: movement.tableSource,
-            tableDestinationId: movement.tableDestination,
+            tableSourceId: movement.tableSource.Id,
+            tableDestinationId: movement.tableDestination.Id,
             date: movement.date
         }
         localStorage.setItem(`${movement.Id}`, JSON.stringify(storableData));
+    }
+
+    removeTableMovement(movement: TableMovement, event: GameEvent): void {
+        localStorage.removeItem(`${movement.Id}`);
+        event.movements = event.movements.filter(currentMovement => currentMovement.Id !== movement.Id);
     }
 }
