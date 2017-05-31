@@ -52,7 +52,7 @@ export class GameActionsService {
         // Make sure all table records are closed.
         event.tableRecords.filter(record => record.end == undefined).forEach(record => record.end = new Date());
         event.end = new Date();
-        this.dataStorer.storeGameEvent(event);        
+        this.dataStorer.storeGameEvent(event);
     }
 
     public openEvent(event: GameEvent) {
@@ -61,11 +61,6 @@ export class GameActionsService {
             table.end = null;
             table.isOpen = true;
         });
-        this.dataStorer.storeGameEvent(event);                
+        this.dataStorer.storeGameEvent(event);
     }
-
-    public deleteEvent(event: GameEvent) {
-        
-    }
-
 }
