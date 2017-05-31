@@ -13,7 +13,7 @@
         <div class="square-tiles-container text-center">
             <div class="col-xs-6" *ngFor="let event of events">
                 <div class="well">
-                    <h2 [routerLink]="['event',event.Id]"> {{ event.name }}</h2>
+                    <h2 [routerLink]="['/event',event.Id]"> {{ event.name }}</h2>
                 </div>
             </div>
             <div class="col-xs-6">
