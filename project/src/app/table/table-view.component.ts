@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { config } from '../config';
 import { Table } from "../models/table.model";
@@ -30,6 +30,7 @@ export class TableViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private dataStorer: LocalDataStorerService,
         private gameCalculator: GameCalculationsService,
         private IDGenerator: IDGeneratorService,
@@ -90,8 +91,13 @@ export class TableViewComponent implements OnInit {
             this.event.tables.push(newTable);
             this.gameActions.moveTable(this.table, newTable, this.event);
             console.debug(`The table ${this.table.Id} was moved to a new table with id: ${newTable.Id}`)
-            this.dataStorer.storeGameEvent(this.event);            
+            this.dataStorer.storeGameEvent(this.event);
         }
+    }
+
+    private onRemoveTable() {
+        this.dataStorer.removeTable(this.table, this.event);
+        this.router.navigate(['/event',this.eventId]);
     }
 
 }

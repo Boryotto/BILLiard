@@ -12,11 +12,11 @@
                     <span class="sr-only">Dropdown toggle button</span>
                 </button>
                 <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li role="menuitem">
+                    <li role="menuitem" *ngIf="table.isOpen && table.moveStatus !== 1 ">
                         <a (click)="newTableModal.show()" class="dropdown-item">Move Table</a>
                     </li>
                     <li role="menuitem">
-                        <a class="dropdown-item">Delete Table</a>
+                        <a class="dropdown-item" (click)="confirmationModal.show()">Delete Table</a>
                     </li>
                 </ul>
             </div>
@@ -133,6 +133,23 @@
                 </div>
                 <table-form #tableForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onSubmitEvent)="onTableFormSubmitted($event); newTableModal.hide()"
                     (onCancelForm)="newTableModal.hide()" [defaultHourlyRate]="event.hourlyRate"></table-form>
+            </div>
+        </div>
+    </div>
+
+    <!--Confirmation modal-->
+    <div bsModal #confirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Would you like to contine?</h4>
+                    <button type="button" class="close pull-right" (click)="confirmation.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <confirmation-form #confirmationForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onConfirmEvent)="confirmationModal.hide(); onRemoveTable()"
+                    (onCancelEvent)="confirmationModal.hide()"></confirmation-form>
             </div>
         </div>
     </div>
