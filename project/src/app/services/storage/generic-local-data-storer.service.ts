@@ -15,18 +15,72 @@ import { TableActivity } from "../../models/table-activity.model";
 export class GenericLocalDataStorerService implements IDataStorer {
 
 
-    public storeObject(obj: any) {
-        let storableData: any = {};
-        this.parseObject(obj);
+    getAllGameEvents(): Promise<GameEvent[]> {
+        return new Promise<GameEvent[]>((resolve, reject) => {
+            let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey))
+            if (eventIds == null) {
+                resolve([]);
+            }
+            this.resolveObjectArray<GameEvent>(eventIds, this.getGameEvent).then(gameEvents => resolve(gameEvents));
+        });
+    }
 
-        storableData = JSON.stringify(obj);
+    private resolveObjectArray<T>(objectIds: number[], resolveFunction: any): Promise<T[]> {
+        let promises: Promise<T>[] = [];
+        objectIds.forEach(Id => promises.push(resolveFunction.call(this, Id) as Promise<T>));
+        return Promise.all(promises);
+    }
+
+    private addEventToEventList(event: GameEvent) {
+        let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
+        if (!eventIds) {
+            eventIds = [];
+        }
+        if (!eventIds.find(id => id === event.Id)) {
+            eventIds.push(event.Id);
+        }
+        localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
+    }
+
+    public storeObject(obj: any) {
+        // create a copy of obj before we change it:
+        // let storableData: any = JSON.parse(JSON.stringify(obj));
+        let storableData: any = this.clone(obj);
+        // because of the json deserialization, all dates are kept as strings. I need to make a clone() function.
+        // FML
+
+        this.parseObject(storableData);
+
+        storableData = JSON.stringify(storableData);
         localStorage.setItem(`${obj.Id}`, storableData);
-        console.log(obj);
+    }
+
+    // problem with this function: it doesn't clone the elements of an array (the recrusive call)
+    private clone(obj: any): any {
+        let clone: any = Object.assign({}, obj);
+        if (typeof obj === 'object') {
+            for (let property in clone) {
+                let propType: string = typeof clone[property];
+                if (propType === 'object'
+                    && clone[property] != null
+                    && !(clone[property] instanceof Date)) {
+                    if (clone[property] instanceof Array) {
+                        for (let i = 0; i < clone[property].length; i++) {
+                            let elementCopy = this.clone(clone[property][i]);
+                            clone[property][i] = elementCopy;
+                        }
+                    } else {
+                        let propertyCopy = this.clone(clone[property]);
+                        clone[property] = propertyCopy;
+                    }
+                }
+            }
+        }
+        return clone;
     }
 
     private parseObject(obj: any) {
         if (obj != null) {
-
             let typeString = typeof obj;
 
             if (typeString === "object") {
@@ -38,16 +92,22 @@ export class GenericLocalDataStorerService implements IDataStorer {
                 } else { // Custom objects and arrays here
                     for (let property in obj) {
                         let propertyType = typeof obj[property];
-                        if (propertyType === 'object' && obj[property] != null) {
+                        if (propertyType === 'object'
+                            && obj[property] != null
+                            && obj[property].type !== "date"
+                            && obj[property].type !== "reference"
+                            && obj[property].type !== "number"
+                        ) {
+
                             if (obj[property] instanceof Array) {
                                 this.parseObject(obj[property]);
                             } else if (obj[property] instanceof Date) {
                                 // This is an arab solution to replace date values in a special key
-                                obj[`date_${property}`] = {
+                                let newPropertyName = `date_${property}`;
+                                obj[newPropertyName] = {
                                     type: 'date',
                                     data: obj[property]
                                 }
-
                                 delete obj[property];
                             } else {
                                 let propCopy = obj[property];
@@ -57,6 +117,13 @@ export class GenericLocalDataStorerService implements IDataStorer {
                                 }
                                 this.storeObject(propCopy);
                             }
+                        } else if (propertyType === 'number') {
+                            let newPropertyName = `number_${property}`;
+                            obj[newPropertyName] = {
+                                type: 'number',
+                                data: obj[property]
+                            }
+                            delete obj[property];
                         }
                     }
                 }
@@ -72,7 +139,6 @@ export class GenericLocalDataStorerService implements IDataStorer {
             }
 
             this.resolveObject(resolvedObject);
-            console.log(resolvedObject);
             resolve(resolvedObject);
         });
     }
@@ -80,7 +146,7 @@ export class GenericLocalDataStorerService implements IDataStorer {
     private resolveObject(obj: any) {
 
         let typeString = typeof obj;
-
+        // console.log(obj);
         if (typeString === "object") {
             // Custom objects and arrays here
             for (let property in obj) {
@@ -88,15 +154,16 @@ export class GenericLocalDataStorerService implements IDataStorer {
                 if (propertyType === 'object' && obj[property] != null) {
                     if (obj[property] instanceof Array) {
                         this.resolveObject(obj[property]);
-                    } else {
-                        if (obj[property].type === 'date') {
-                            obj[property.split('date_')[1]] = new Date(obj[property].data);
-                            delete obj[property];
-                        } else if (obj[property].type === 'reference') {
-                            this.getObject(obj[property].data).then(resolvedObject => {
-                                obj[property] = resolvedObject;
-                            });
-                        }
+                    } else if (obj[property].type === 'date') {
+                        obj[property.split('date_')[1]] = new Date(obj[property].data);
+                        delete obj[property];
+                    } else if (obj[property].type === 'reference') {
+                        this.getObject(obj[property].data).then(resolvedObject => {
+                            obj[property] = resolvedObject;
+                        });
+                    } else if (obj[property].type === 'number') {
+                        obj[property.split('number_')[1]] = +obj[property].data;
+                        delete obj[property];
                     }
                 }
             }
@@ -106,8 +173,10 @@ export class GenericLocalDataStorerService implements IDataStorer {
     getGameEvent(eventId: number): Promise<GameEvent> {
         return this.getObject(eventId);
     }
+
     storeGameEvent(event: GameEvent): void {
         this.storeObject(event);
+        this.addEventToEventList(event);
     }
     getPlayer(playerId: number): Promise<Player> {
         return this.getObject(playerId);

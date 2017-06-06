@@ -7,6 +7,8 @@ import { TableMovement } from "../models/table-movement.model";
 
 export interface IDataStorer {
 
+    getAllGameEvents(): Promise<GameEvent[]>;
+
     getGameEvent(eventId: number): Promise<GameEvent>;
     storeGameEvent(event: GameEvent): void;
 
