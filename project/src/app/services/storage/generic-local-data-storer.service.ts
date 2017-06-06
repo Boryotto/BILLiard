@@ -14,7 +14,6 @@ import { TableActivity } from "../../models/table-activity.model";
 @Injectable()
 export class GenericLocalDataStorerService implements IDataStorer {
 
-
     getAllGameEvents(): Promise<GameEvent[]> {
         return new Promise<GameEvent[]>((resolve, reject) => {
             let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey))
@@ -43,13 +42,7 @@ export class GenericLocalDataStorerService implements IDataStorer {
     }
 
     public storeObject(obj: any) {
-        // create a copy of obj before we change it:
-        // let storableData: any = JSON.parse(JSON.stringify(obj));
-        let storableData: any = this.clone(obj);
-        // because of the json deserialization, all dates are kept as strings. I need to make a clone() function.
-        // FML
-
-        this.parseObject(storableData);
+        let storableData = this.parseObject(obj);
 
         storableData = JSON.stringify(storableData);
         localStorage.setItem(`${obj.Id}`, storableData);
@@ -81,53 +74,62 @@ export class GenericLocalDataStorerService implements IDataStorer {
 
     private parseObject(obj: any) {
         if (obj != null) {
+            let parsedObject: any = {};
+            if (obj instanceof Array) {
+                parsedObject = [];
+            }
+
             let typeString = typeof obj;
 
-            if (typeString === "object") {
-                if (obj instanceof Date) {
-                    obj = {
-                        type: 'date',
-                        data: obj
-                    }
-                } else { // Custom objects and arrays here
-                    for (let property in obj) {
-                        let propertyType = typeof obj[property];
-                        if (propertyType === 'object'
-                            && obj[property] != null
-                            && obj[property].type !== "date"
-                            && obj[property].type !== "reference"
-                            && obj[property].type !== "number"
-                        ) {
-
-                            if (obj[property] instanceof Array) {
-                                this.parseObject(obj[property]);
-                            } else if (obj[property] instanceof Date) {
-                                // This is an arab solution to replace date values in a special key
-                                let newPropertyName = `date_${property}`;
-                                obj[newPropertyName] = {
-                                    type: 'date',
-                                    data: obj[property]
-                                }
-                                delete obj[property];
-                            } else {
-                                let propCopy = obj[property];
-                                obj[property] = {
-                                    type: 'reference',
-                                    data: obj[property].Id
-                                }
-                                this.storeObject(propCopy);
-                            }
-                        } else if (propertyType === 'number') {
-                            let newPropertyName = `number_${property}`;
-                            obj[newPropertyName] = {
-                                type: 'number',
-                                data: obj[property]
-                            }
-                            delete obj[property];
-                        }
-                    }
+            if (typeString === 'number') {
+                parsedObject = {
+                    type: 'number',
+                    data: obj
+                }
+            } else if (obj instanceof Date) {
+                parsedObject = {
+                    type: 'date',
+                    data: obj
                 }
             }
+            else if (typeString === "object"
+                && obj != null
+                && obj.type !== "date"
+                && obj.type !== "reference"
+                && obj.type !== "number") {
+
+                // Custom objects and arrays here
+                for (let property in obj) {
+                    let propertyType = typeof obj[property];
+
+                    if (obj[property] instanceof Date) {
+                        // This is an arab solution to replace date values in a special key
+                        let newPropertyName = `date_${property}`;
+                        parsedObject[newPropertyName] = this.parseObject(obj[property]);
+                    } else if (propertyType === 'number') {
+                        let newPropertyName = `number_${property}`;
+                        parsedObject[newPropertyName] = this.parseObject(obj[property]);
+                    } else if (obj[property] instanceof Array) {
+                        parsedObject[property] = this.parseObject(obj[property]);
+                    }
+                    else if (propertyType === 'object'
+                        && obj[property] != null
+                        && obj[property].type !== "date"
+                        && obj[property].type !== "reference"
+                        && obj[property].type !== "number") {
+                        parsedObject[property] = {
+                            type: 'reference',
+                            data: obj[property].Id
+                        };
+                        this.storeObject(obj[property]);
+                    } else {
+                        parsedObject[property] = this.parseObject(obj[property]);
+                    }
+                }
+            } else {
+                parsedObject = obj;
+            }
+            return parsedObject;
         }
     }
 
