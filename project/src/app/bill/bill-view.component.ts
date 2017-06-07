@@ -9,11 +9,12 @@ import { Table } from "../models/table.model";
 import { TableMoveStatus } from "../models/table-move-status.enum";
 import { TableMovement } from "../models/table-movement.model";
 import { TableRecord } from "../models/table-record.model";
-import { config } from '../config';
+import { config, classes } from '../config';
 import { GameCalculationsService } from "../services/game/game-calculations.service";
 import { TableActivity } from "../models/table-activity.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
 import { MoneyCalculationsService } from "../services/game/money-calculations.service";
+import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
 
 @Component({
     selector: 'bill-view',
@@ -25,7 +26,7 @@ export class BillViewComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private dataStorer: LocalDataStorerService,
+        private dataStorer: GenericLocalDataStorerService,
         private IDGenerator: IDGeneratorService,
         private gameCalculator: GameCalculationsService,
         private moneyCalculator: MoneyCalculationsService
@@ -33,6 +34,7 @@ export class BillViewComponent implements OnInit {
 
     private eventId: number;
     private event: GameEvent;
+    private panelClass: string = classes.player_bill_panel;
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {

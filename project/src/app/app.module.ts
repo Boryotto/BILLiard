@@ -7,6 +7,8 @@ import { appRoutes } from './app.routes';
 
 // Services
 import { LocalDataStorerService } from "./services/storage/local-data-storer.service";
+import { GenericLocalDataStorerService } from "./services/storage/generic-local-data-storer.service";
+import { CloneService } from "./services/storage/clone.service";
 import { IDGeneratorService } from "./services/storage/id-generator.service";
 import { GameCalculationsService } from "./services/game/game-calculations.service";
 import { GameActionsService } from "./services/game/game-actions.service";
@@ -66,6 +68,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
   bootstrap: [AppComponent],
   providers: [
     LocalDataStorerService,
+    GenericLocalDataStorerService,
+    CloneService,
     IDGeneratorService,
     GameCalculationsService,
     GameActionsService,

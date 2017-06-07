@@ -14,6 +14,7 @@ import { GameCalculationsService } from "../services/game/game-calculations.serv
 import { TableActivity } from "../models/table-activity.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
 import { GameActionsService } from "../services/game/game-actions.service";
+import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
 
 @Component({
   selector: 'event',
@@ -31,7 +32,7 @@ export class EventComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private dataStorer: LocalDataStorerService,
+    private dataStorer: GenericLocalDataStorerService,
     private IDGenerator: IDGeneratorService,
     private gameCalculator: GameCalculationsService,
     private gameActions: GameActionsService

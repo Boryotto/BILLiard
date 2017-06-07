@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { LocalDataStorerService } from "../../services/storage/local-data-storer.service";
 import { GameEvent } from "../../models/game-event.model";
 import { Table } from "../../models/table.model";
+import { GenericLocalDataStorerService } from "../../services/storage/generic-local-data-storer.service";
 
 
 @Component({
@@ -29,7 +30,7 @@ export class PlayerPickerFormComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataStorer: LocalDataStorerService,
+        private dataStorer: GenericLocalDataStorerService,
         private gameCalculator: GameCalculationsService
     ) { }
 

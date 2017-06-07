@@ -9,13 +9,14 @@ import { IDGeneratorService } from "../storage/id-generator.service";
 import { LocalDataStorerService } from "../storage/local-data-storer.service";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
 import { TableMovement } from "../../models/table-movement.model";
+import { GenericLocalDataStorerService } from "../storage/generic-local-data-storer.service";
 
 @Injectable()
 export class GameActionsService {
 
     constructor(
         private IDGenerator: IDGeneratorService,
-        private dataStorer: LocalDataStorerService
+        private dataStorer: GenericLocalDataStorerService
     ) { }
 
     public closeTable(table: Table, event: GameEvent) {

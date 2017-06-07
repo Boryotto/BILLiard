@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameEvent } from "../models/game-event.model";
 import { LocalDataStorerService } from "../services/storage/local-data-storer.service";
+import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
+import { CloneService } from "../services/storage/clone.service";
 
 @Component({
     selector: 'overview',
@@ -14,7 +16,8 @@ export class OverviewComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private dataStorer: LocalDataStorerService,
+        private dataStorer: GenericLocalDataStorerService,
+        private cloner: CloneService
     ) { }
 
     ngOnInit(): void {

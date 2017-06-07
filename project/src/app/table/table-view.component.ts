@@ -10,6 +10,7 @@ import { Player } from "../models/player.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
 import { TableRecord } from "../models/table-record.model";
 import { GameActionsService } from "../services/game/game-actions.service";
+import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class TableViewComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private dataStorer: LocalDataStorerService,
+        private dataStorer: GenericLocalDataStorerService,
         private gameCalculator: GameCalculationsService,
         private IDGenerator: IDGeneratorService,
         private gameActions: GameActionsService
@@ -96,7 +97,8 @@ export class TableViewComponent implements OnInit {
     }
 
     private onRemoveTable() {
-        this.dataStorer.removeTable(this.table, this.event);
+        // this.dataStorer.removeTable(this.table, this.event);
+        console.log("The removeTable function was commented out for general debugging");
         this.router.navigate(['/event',this.eventId]);
     }
 

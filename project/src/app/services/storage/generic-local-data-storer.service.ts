@@ -14,6 +14,8 @@ import { TableActivity } from "../../models/table-activity.model";
 @Injectable()
 export class GenericLocalDataStorerService implements IDataStorer {
 
+    private cache: any = {};
+
     getAllGameEvents(): Promise<GameEvent[]> {
         return new Promise<GameEvent[]>((resolve, reject) => {
             let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey))
@@ -141,7 +143,10 @@ export class GenericLocalDataStorerService implements IDataStorer {
             }
 
             this.resolveObject(resolvedObject);
-            resolve(resolvedObject);
+            if (Object.keys(this.cache).indexOf(`${id}`) === -1) {
+                this.cache[id] = resolvedObject;
+            }
+            resolve(this.cache[id]);
         });
     }
 

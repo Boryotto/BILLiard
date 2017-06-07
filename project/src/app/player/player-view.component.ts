@@ -10,6 +10,7 @@ import { Table } from "../models/table.model";
 import { GameCalculationsService } from "../services/game/game-calculations.service";
 import { TableRecord } from "../models/table-record.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
+import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class PlayerViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataStorer: LocalDataStorerService,
+        private dataStorer: GenericLocalDataStorerService,
         private IDGenerator: IDGeneratorService,
         private gameCalculator: GameCalculationsService
     ) { }

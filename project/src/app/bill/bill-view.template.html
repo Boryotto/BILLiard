@@ -24,7 +24,7 @@
             </div>
             <div class="col-xs-8">
                 <h2>
-                    <timer [interval]=1000 [start]="event.start" [difference]=true [active]="!event.end" [displayDays]="true"></timer>
+                    <timer [interval]=1000 [start]="event.start" [end]="event.end" [difference]=true [active]="!event.end" [displayDays]="true"></timer>
                 </h2>
                 <h4>Time Playing</h4>
             </div>
@@ -41,24 +41,25 @@
         </div>
     </section>
     <hr>
-    <div class="horizontal-list horizontal-list-centered">
-        <div class="col-xs-12">
-            <accordion>
-                <accordion-group *ngFor="let player of event.players" #group [isOpen]="latestPlayerIdAdded === player.Id">
-                    <div accordion-heading>
-                        <i class="pull-rigt float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down' : group?.isOpen, 
+    <section id="info-view" class="page-section">
+
+        <h3>Player Bills</h3>
+        <accordion>
+            <accordion-group *ngFor="let player of event.players" #group [isOpen]="latestPlayerIdAdded === player.Id" [panelClass]="panelClass">
+                <div accordion-heading>
+                    <i class="pull-rigt float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down' : group?.isOpen, 
                     'glyphicon-chevron-right' : !group?.isOpen}"></i>
-                        <img src="../../assets/vectors/player.svg" class="list-icon">
-                        <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
-                        <span>
+                    <img src="../../assets/vectors/player.svg" class="list-icon">
+                    <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
+                    <span>
                             <img src="../../assets/vectors/coins.svg" class="list-icon">
                             <bill [interval]=1000 [player]=player [event]=event></bill>
                         </span>
-                    </div>
-                    <section>
-                        <h4>Food & Drinks</h4>
-                        <div class="fixed-height-list list-group" *ngIf="player.miscItems.length > 0">
-                            <a class="list-group-item" *ngFor="let item of player.miscItems">
+                </div>
+                <section>
+                    <h4>Food & Drinks</h4>
+                    <div class="fixed-height-list list-group" *ngIf="player.miscItems.length > 0">
+                        <a class="list-group-item" *ngFor="let item of player.miscItems">
                                 <span>
                                 <img src="../../assets/vectors/pint.svg" class="list-icon">
                                 <h4 class="inline-heading list-group-item-heading">{{ item.name }}</h4>
@@ -72,14 +73,14 @@
                                 {{ item.orderDate | date:'HH:mm:ss' }}
                             </span>
                             </a>
-                        </div>
-                        <h4 class="text-center" *ngIf="player.miscItems.length === 0"> Nothing to show </h4>
-                    </section>
-                    <hr>
-                    <section>
-                        <h4>Games</h4>
-                        <div class="fixed-height-list list-group" *ngIf="gameCalculator.getTableRecordsForPlayer(player, event).length > 0">
-                            <a class="list-group-item" *ngFor="let record of gameCalculator.getTableRecordsForPlayer(player, event)">
+                    </div>
+                    <h4 class="text-center" *ngIf="player.miscItems.length === 0"> Nothing to show </h4>
+                </section>
+                <hr>
+                <section>
+                    <h4>Games</h4>
+                    <div class="fixed-height-list list-group" *ngIf="gameCalculator.getTableRecordsForPlayer(player, event).length > 0">
+                        <a class="list-group-item" *ngFor="let record of gameCalculator.getTableRecordsForPlayer(player, event)">
                                 <img src="../../assets/vectors/billiard.svg" class="list-icon">
                                 <h4 class="inline-heading list-group-item-heading">
                                 {{ record.table.name }}
@@ -100,11 +101,10 @@
                                 <timer *ngIf="!record.end" [interval]=1000 [active]="!record.end" ></timer>
                             </span>
                             </a>
-                        </div>
-                        <h4 class="text-center" *ngIf="gameCalculator.getTableRecordsForPlayer(player, event).length === 0"> Nothing to show </h4>
-                    </section>
-                </accordion-group>
-            </accordion>
-        </div>
-    </div>
+                    </div>
+                    <h4 class="text-center" *ngIf="gameCalculator.getTableRecordsForPlayer(player, event).length === 0"> Nothing to show </h4>
+                </section>
+            </accordion-group>
+        </accordion>
+    </section>
 </section>

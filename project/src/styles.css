@@ -83,3 +83,7 @@ h1 {
     flex-wrap: wrap;
     align-items: stretch;
 }
+
+.player-bill-panel {
+    margin-bottom: 2vh !important;
+}

@@ -17,6 +17,10 @@ export const colorPallete: any = {
     divider: '#BDBDBD',
 };
 
+export const classes: any = {
+    player_bill_panel: 'player-bill-panel panel-default'
+}
+
 export const errorCodes: any = {
     '404': "Object not found :("
 };
