@@ -14,6 +14,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 export class TimerComponent implements OnInit, OnDestroy {
 
     @Input() private start: Date;
+    @Input() private end: Date;
     @Input() private active: boolean;
     @Input() private interval: number;
     @Input() private difference: boolean;
@@ -29,7 +30,10 @@ export class TimerComponent implements OnInit, OnDestroy {
         } else {
             this.currentDate = new Date(this.start);
             if (this.difference) {
-                this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
+                if (this.end == undefined)
+                    this.currentDate.setTime(new Date().getTime() - this.currentDate.getTime());
+                else
+                    this.currentDate.setTime(this.end.getTime() - this.currentDate.getTime());
             }
             this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()) // Fix the timezone offset            
         }
