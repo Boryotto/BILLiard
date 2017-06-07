@@ -84,6 +84,7 @@
                                 <img src="../../assets/vectors/billiard.svg" class="list-icon">
                                 <h4 class="inline-heading list-group-item-heading">
                                 {{ record.table.name }}
+                                <small *ngIf="record.table.moveStatus == 1">moved table</small>
                                 </h4>
                             <span>
                             <img src="../../assets/vectors/coins.svg" class="list-icon">
