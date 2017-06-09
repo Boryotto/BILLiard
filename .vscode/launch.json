@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch localhost with sourcemaps",
+            "type": "chrome",
+            // "request": "attach",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            // "port": 9223,
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}/project/src",
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "runtimeExecutable": "E:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "webRoot": "${workspaceRoot}"
+        }
+    ]
+}

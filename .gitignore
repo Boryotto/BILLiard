@@ -11,3 +11,7 @@ aot/*
 dist/*
 yarn.lock
 project/*.log
+
+
+out
+.vscode/chrome
