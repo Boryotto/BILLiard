@@ -10,6 +10,7 @@ import { LocalDataStorerService } from "../storage/local-data-storer.service";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
 import { TableMovement } from "../../models/table-movement.model";
 import { GenericLocalDataStorerService } from "../storage/generic-local-data-storer.service";
+import { MiscItem } from "../../models/misc-item.model";
 
 @Injectable()
 export class GameActionsService {
@@ -46,6 +47,42 @@ export class GameActionsService {
         event.movements.push(new TableMovement(this.IDGenerator.generateId(), source, destination, new Date()))
         this.closeTable(source, event);
         this.openTable(destination, event);
+    }
+
+    public deleteEvent(event: GameEvent) {
+        if (event) {
+            console.info(`Removing event (Id: ${event.Id})...`);
+            this.dataStorer.removeGameEvent(event);
+            console.info(`Done removing event (Id: ${event.Id})`);
+        }
+    }
+
+    public deleteTable(table: Table, event: GameEvent) {
+        if (table && event) {
+            console.info(`Removing table (Id: ${table.Id})...`);
+            event.tableRecords = event.tableRecords.filter(record => record.table.Id !== table.Id);
+            event.tableActivities = event.tableActivities.filter(activity => activity.table.Id !== table.Id);
+            event.movements = event.movements.filter(movement =>
+                movement.tableDestination.Id !== table.Id
+                && movement.tableSource.Id !== table.Id
+            )
+            event.tables = event.tables.filter(currentTable => currentTable.Id !== table.Id);
+            this.dataStorer.deleteObject(table.Id);
+            this.dataStorer.storeObject(event);
+            console.info(`Done removing table (Id: ${table.Id})`);
+        }
+    }
+
+    public deletePlayer(player: Player, event: GameEvent) {
+        if (player && event) {
+            console.info(`Removing player (Id: ${player.Id})...`);
+            event.players = event.players.filter(currentPlayer => currentPlayer.Id !== player.Id);
+            event.tableRecords = event.tableRecords.filter(record => record.player.Id !== player.Id);
+
+            this.dataStorer.deleteObject(player.Id);
+            this.dataStorer.storeObject(event);
+            console.info(`Done removing player (Id: ${player.Id})`);
+        }
     }
 
     public closeEvent(event: GameEvent) {
