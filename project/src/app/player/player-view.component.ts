@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { config } from '../config';
 import { GameEvent } from "../models/game-event.model";
@@ -11,6 +11,7 @@ import { GameCalculationsService } from "../services/game/game-calculations.serv
 import { TableRecord } from "../models/table-record.model";
 import { IDGeneratorService } from "../services/storage/id-generator.service";
 import { GenericLocalDataStorerService } from "../services/storage/generic-local-data-storer.service";
+import { GameActionsService } from "../services/game/game-actions.service";
 
 
 @Component({
@@ -31,9 +32,11 @@ export class PlayerViewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private dataStorer: GenericLocalDataStorerService,
         private IDGenerator: IDGeneratorService,
-        private gameCalculator: GameCalculationsService
+        private gameCalculator: GameCalculationsService,
+        private gameActions: GameActionsService
     ) { }
 
     ngOnInit(): void {
@@ -114,5 +117,10 @@ export class PlayerViewComponent implements OnInit {
             console.debug(`Storing the game event (id: ${this.event.Id}) with the updated table records`);
             this.dataStorer.storeGameEvent(this.event);
         }
+    }
+
+    private onRemovePlayer() {
+        this.gameActions.deletePlayer(this.player, this.event);
+        this.router.navigate(['/event', this.eventId]);
     }
 }
