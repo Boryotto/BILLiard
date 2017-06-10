@@ -22,6 +22,17 @@ export class IDGeneratorService {
         return newID;
     }
 
+    public releaseReservedId(...ids: number[]) {
+        if (ids && ids.length > 0) {
+            console.info(`clearing reserved ids (${ids}) from id regirstry...`);
+            this.generatedIDs = this.generatedIDs.filter(currentId =>
+                ids.find(id => id === currentId) === -1
+            );
+            this.storeGeneratedIDs(this.generatedIDs);
+            console.info(`Done clearing reserved ids from id regirstry...`);
+        }
+    }
+
     private storeGeneratedIDs(generatedIds: number[]) {
         localStorage.setItem(config.guidCacheKey, JSON.stringify(generatedIds));
     }
