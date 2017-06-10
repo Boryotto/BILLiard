@@ -44,6 +44,7 @@
     <section id="info-view" class="page-section">
 
         <h3>Player Bills</h3>
+        <h4 class="text-center" *ngIf="event.players.length === 0"> Nothing to show. </h4>
         <accordion>
             <accordion-group *ngFor="let player of event.players" #group [isOpen]="latestPlayerIdAdded === player.Id" [panelClass]="panelClass">
                 <div accordion-heading>
