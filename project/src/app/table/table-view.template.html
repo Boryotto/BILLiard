@@ -144,9 +144,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Would you like to contine?</h4>
-                    <button type="button" class="close pull-right" (click)="confirmation.hide()" aria-label="Close">
+                    <button type="button" class="close pull-right" (click)="confirmationModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+                </div>
+                <div class="modal-body">
+                    Warning: All table movements and playing records on this table will be deleted.<br>
+                    <strong>This action cannot be undone.</strong>
                 </div>
                 <confirmation-form #confirmationForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onConfirmEvent)="confirmationModal.hide(); onRemoveTable()"
                     (onCancelEvent)="confirmationModal.hide()"></confirmation-form>

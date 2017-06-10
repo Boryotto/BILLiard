@@ -97,9 +97,8 @@ export class TableViewComponent implements OnInit {
     }
 
     private onRemoveTable() {
-        // this.dataStorer.removeTable(this.table, this.event);
-        console.log("The removeTable function was commented out for general debugging");
-        this.router.navigate(['/event',this.eventId]);
+        this.gameActions.deleteTable(this.table, this.event);
+        this.router.navigate(['/event', this.eventId]);
     }
 
 }
