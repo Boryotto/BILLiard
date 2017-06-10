@@ -10,11 +10,16 @@ import { TableRecord } from "../../models/table-record.model";
 import { TableMovement } from "../../models/table-movement.model";
 import { TableMoveStatus } from "../../models/table-move-status.enum";
 import { TableActivity } from "../../models/table-activity.model";
+import { IDGeneratorService } from "./id-generator.service";
 
 @Injectable()
 export class GenericLocalDataStorerService implements IDataStorer {
 
     private cache: any = {};
+
+    constructor(
+        private idGenerator: IDGeneratorService
+    ) { }
 
     getAllGameEvents(): Promise<GameEvent[]> {
         return new Promise<GameEvent[]>((resolve, reject) => {
@@ -33,14 +38,27 @@ export class GenericLocalDataStorerService implements IDataStorer {
     }
 
     private addEventToEventList(event: GameEvent) {
-        let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
-        if (!eventIds) {
-            eventIds = [];
+        if (event) {
+            let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
+            if (!eventIds) {
+                eventIds = [];
+            }
+            if (!eventIds.find(id => id === event.Id)) {
+                eventIds.push(event.Id);
+            }
+            localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
         }
-        if (!eventIds.find(id => id === event.Id)) {
-            eventIds.push(event.Id);
+    }
+
+    private removeEventFromEventList(event: GameEvent) {
+        if (event) {
+            let eventIds: number[] = JSON.parse(localStorage.getItem(config.eventIdArrayStorageKey));
+            if (!eventIds) {
+                return;
+            }
+            eventIds = eventIds.filter(Id => Id !== event.Id);
+            localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
         }
-        localStorage.setItem(config.eventIdArrayStorageKey, JSON.stringify(eventIds));
     }
 
     public storeObject(obj: any) {
@@ -177,6 +195,12 @@ export class GenericLocalDataStorerService implements IDataStorer {
         }
     }
 
+    public deleteObject(id: number) {
+        localStorage.removeItem(`${id}`);
+        delete this.cache[id];
+        this.idGenerator.releaseReservedId(id);
+    }
+
     getGameEvent(eventId: number): Promise<GameEvent> {
         return this.getObject(eventId);
     }
@@ -216,4 +240,10 @@ export class GenericLocalDataStorerService implements IDataStorer {
         this.storeObject(movement);
     }
 
+    removeGameEvent(event: GameEvent) {
+        if (event) {
+            this.removeEventFromEventList(event);
+            this.deleteObject(event.Id);
+        }
+    }
 }
