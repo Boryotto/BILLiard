@@ -19,7 +19,7 @@
             <a [routerLink]="['bill']" class="dropdown-item">Display Bill</a>
           </li>
           <li role="menuitem">
-            <a class="dropdown-item">Delete Event</a>
+            <a class="dropdown-item" (click)="deleteConfirmationModal.show()">Delete Event</a>
           </li>
         </ul>
       </div>
@@ -169,7 +169,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title pull-left">Would you like to contine?</h4>
-          <button type="button" class="close pull-right" (click)="confirmation.hide()" aria-label="Close">
+          <button type="button" class="close pull-right" (click)="confirmationModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         </div>
@@ -178,6 +178,28 @@
       </div>
     </div>
   </div>
+
+  <!-- Delete event Confirmation modal-->
+  <div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Would you like to contine?</h4>
+          <button type="button" class="close pull-right" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          Warning: All data of this game event will be deleted.<br>
+          <strong>This action cannot be undone.</strong>
+        </div>
+        <confirmation-form #deleteConfirmationForm [bodyClass]='"modal-body"' [footerClass]='"modal-footer"' (onConfirmEvent)="deleteConfirmationModal.hide(); onDeleteEvent()"
+          (onCancelEvent)="deleteConfirmationModal.hide()"></confirmation-form>
+      </div>
+    </div>
+  </div>
+
 
 
 </section>

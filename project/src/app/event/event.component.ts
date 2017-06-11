@@ -81,4 +81,9 @@ export class EventComponent implements OnInit {
     }
   }
 
+  private onDeleteEvent() {
+    this.gameActions.deleteEvent(this.event);
+    this.router.navigate(['/']);
+  }
+
 } 
