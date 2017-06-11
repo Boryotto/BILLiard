@@ -196,9 +196,26 @@ export class GenericLocalDataStorerService implements IDataStorer {
     }
 
     public deleteObject(id: number) {
-        localStorage.removeItem(`${id}`);
-        delete this.cache[id];
-        this.idGenerator.releaseReservedId(id);
+        let obj = this.getObject(id).then(obj => {
+            this.deleteChildObjects(obj);
+
+            localStorage.removeItem(`${id}`);
+            delete this.cache[id];
+            this.idGenerator.releaseReservedId(id);
+        });
+    }
+
+    private deleteChildObjects(obj: any) {
+        if (obj && typeof obj === 'object') {
+            for (let property in obj) {
+                if (obj[property] instanceof Array) {
+                    this.deleteChildObjects(obj[property]);
+                } else if (typeof obj[property] === 'object'
+                    && !(obj[property] instanceof Date)) {
+                    this.deleteObject(obj[property].Id);
+                }
+            }
+        }
     }
 
     getGameEvent(eventId: number): Promise<GameEvent> {
@@ -242,8 +259,8 @@ export class GenericLocalDataStorerService implements IDataStorer {
 
     removeGameEvent(event: GameEvent) {
         if (event) {
-            this.removeEventFromEventList(event);
             this.deleteObject(event.Id);
+            this.removeEventFromEventList(event);
         }
     }
 }
