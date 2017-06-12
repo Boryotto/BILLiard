@@ -47,7 +47,6 @@ export class TableViewComponent implements OnInit {
 
         this.dataStorer.getGameEvent(this.eventId).then(event => this.event = event).then(() => {
             this.table = this.event.tables.find(table => table.Id === this.tableId);
-            console.log(this.event)
         });
     }
 

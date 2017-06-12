@@ -187,7 +187,6 @@ export class LocalDataStorerService implements IDataStorer {
 
             let storedData = JSON.parse(localStorage.getItem(`${tableId}`));
             if (storedData == undefined) {
-                console.log(tableId);
                 reject(`Item with the id: ${tableId} was not found`);
             }
             resolve(new Table(
@@ -218,8 +217,6 @@ export class LocalDataStorerService implements IDataStorer {
         event.tableActivities.filter(activity => activity.table.Id === table.Id).forEach(activity => this.removeTableActivity(activity, event));
         event.tables = event.tables.filter(currentTable => currentTable.Id !== table.Id);
         localStorage.removeItem(`${table.Id}`);
-        console.log(table);
-        console.log(event);
     }
 
     getMiscItem(itemId: number): Promise<MiscItem> {

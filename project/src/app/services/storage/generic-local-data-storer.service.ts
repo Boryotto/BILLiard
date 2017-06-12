@@ -171,7 +171,6 @@ export class GenericLocalDataStorerService implements IDataStorer {
     private resolveObject(obj: any) {
 
         let typeString = typeof obj;
-        // console.log(obj);
         if (typeString === "object") {
             // Custom objects and arrays here
             for (let property in obj) {
