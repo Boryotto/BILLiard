@@ -3,7 +3,8 @@ export const config: any = {
     guidCacheKey: "GUID_Cache",
     currencyISOCode: 'ILS',
     currencySymbol: '₪',
-    eventIdArrayStorageKey: 'eventIds'
+    eventIdArrayStorageKey: 'eventIds',
+    defaultIntervalMillis: 1000 
 };
 
 export const colorPallete: any = {

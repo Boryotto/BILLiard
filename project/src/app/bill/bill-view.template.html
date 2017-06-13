@@ -89,14 +89,14 @@
                                 </h4>
                             <span>
                             <img src="../../assets/vectors/coins.svg" class="list-icon">
-                                <bill [bill]="moneyCalculator.calculateTableRecordBill(record)"></bill>
+                                <bill [tableRecord]="record"></bill>
                             </span>
                             <br>
                             <span>
                                 <img src="../../assets/vectors/clock.svg" class="list-icon">
                                 <timer [start]="record.start"></timer>
                             </span>
-                            --->
+                            <span class="glyphicon glyphicon-arrow-right"></span>
                             <span>
                                 <img src="../../assets/vectors/clock.svg" class="list-icon">
                                 <timer *ngIf="record.end" [start]="record.end" ></timer>
@@ -105,6 +105,10 @@
                             </a>
                     </div>
                     <h4 class="text-center" *ngIf="gameCalculator.getTableRecordsForPlayer(player, event).length === 0"> Nothing to show </h4>
+                </section>
+                <section>
+                    <h4>Dead Time Bill</h4>
+                    <bill [displayDeadTimeBill]="true" [event]="event" [player]="player"></bill>
                 </section>
             </accordion-group>
         </accordion>
