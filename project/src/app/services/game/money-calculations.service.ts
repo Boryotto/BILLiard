@@ -121,14 +121,15 @@ export class MoneyCalculationsService {
     }
 
     public calculateTableRecordBill(tableRecord: TableRecord): number {
-        let millis: number = 0;
-        let start: Date = new Date(tableRecord.start);
-        let end: Date = new Date(tableRecord.end);
-        if (end != undefined) {
-            millis += end.getTime() - start.getTime();
-        } else {
-            millis += new Date().getTime() - start.getTime();
+        if (tableRecord) {
+            let millis: number = 0;
+            if (tableRecord.end) {
+                millis += tableRecord.end.getTime() - tableRecord.start.getTime();
+            } else {
+                millis = new Date().getTime() - tableRecord.start.getTime();
+            }
+            return (millis / 3600000) * tableRecord.table.hourlyRate;
         }
-        return (millis / 3600000) * tableRecord.table.hourlyRate;
+        return 0;
     }
 }
