@@ -151,6 +151,7 @@ export class GenericLocalDataStorerService implements IDataStorer {
             }
             return parsedObject;
         }
+        return null;
     }
 
     public getObject(id: number): Promise<any> {
