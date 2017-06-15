@@ -11,7 +11,7 @@
             <label class="control-label" for="hourlyRate">Hourly Rate</label>
             <div class="input-group">
                 <span class="input-group-addon">{{ currencySymbol }}</span>
-                <input type="text" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="hourlyRate" [(ngModel)]="model.hourlyRate" name="hourlyRate" #hourlyRate="ngModel"
+                <input type="number" pattern="^[0-9]\d*(\.\d+)?$" class="form-control" id="hourlyRate" [(ngModel)]="model.hourlyRate" name="hourlyRate" #hourlyRate="ngModel"
                     required>
             </div>
             <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="hourlyRate.valid" aria-hidden="true"></span>
