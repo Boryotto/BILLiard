@@ -16,7 +16,7 @@
     </div>
     <section id="tip-view" class="page-section">
         <h3>Tip</h3>
-        <form (ngSubmit)="onSubmit($event)" #tipForm="ngForm">
+        <form #tipForm="ngForm">
             <div class="form-group has-feedback" [ngClass]="{'has-success': tip.valid, 'has-error': !tip.valid}">
                 <div class="input-group">
                     <span class="input-group-addon">%</span>
