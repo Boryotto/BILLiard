@@ -211,7 +211,8 @@ export class GenericLocalDataStorerService implements IDataStorer {
                 if (obj[property] instanceof Array) {
                     this.deleteChildObjects(obj[property]);
                 } else if (typeof obj[property] === 'object'
-                    && !(obj[property] instanceof Date)) {
+                    && !(obj[property] instanceof Date)
+                    && obj[property]) {
                     this.deleteObject(obj[property].Id);
                 }
             }
