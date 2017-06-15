@@ -14,7 +14,21 @@
             </h1>
         </div>
     </div>
-
+    <section id="tip-view" class="page-section">
+        <h3>Tip</h3>
+        <form (ngSubmit)="onSubmit($event)" #tipForm="ngForm">
+            <div class="form-group has-feedback" [ngClass]="{'has-success': tip.valid, 'has-error': !tip.valid}">
+                <div class="input-group">
+                    <span class="input-group-addon">%</span>
+                    <input type="number" pattern="^[0-9]\d*(\.\d+)?$" autofocus class="form-control" id="tip" [(ngModel)]="tipPercentage" name="tip"
+                        #tip="ngModel" required>
+                </div>
+                <span class="glyphicon glyphicon-ok form-control-feedback" *ngIf="tip.valid" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback" *ngIf="!tip.valid" aria-hidden="true"></span>
+            </div>
+        </form>
+    </section>
+    <hr>
     <section id="info-view" class="page-section">
         <h3>Info</h3>
         <div class="horizontal-list horizontal-list-centered text-center">
@@ -30,7 +44,7 @@
             </div>
             <div class="col-xs-8">
                 <h2>
-                    <bill [interval]=1000 [event]=event></bill>
+                    <bill [interval]=1000 [event]=event [tip]="tipPercentage"></bill>
                 </h2>
                 <h4>Total Bill</h4>
             </div>
@@ -53,9 +67,9 @@
                     <img src="../../assets/vectors/player.svg" class="list-icon">
                     <h4 class="inline-heading list-group-item-heading">{{ player.name }}</h4>
                     <span>
-                            <img src="../../assets/vectors/coins.svg" class="list-icon">
-                            <bill [interval]=1000 [player]=player [event]=event></bill>
-                        </span>
+                        <img src="../../assets/vectors/coins.svg" class="list-icon">
+                        <bill [interval]=1000 [player]=player [event]=event [tip]="tipPercentage"></bill>
+                    </span>
                 </div>
                 <section>
                     <h4>Food & Drinks</h4>
@@ -109,6 +123,19 @@
                 <section>
                     <h4>Dead Time Bill</h4>
                     <bill [displayDeadTimeBill]="true" [event]="event" [player]="player"></bill>
+                </section>
+                <hr>
+                <section>
+                    <h4>Subtotal</h4>
+                    <h3 class="text-primary">
+                        <bill [interval]=1000 [player]=player [event]=event></bill>
+                    </h3>
+                    <h4>Total After Tip
+                        <small>({{ tipPercentage }}%)</small>
+                    </h4>
+                    <h3 class="text-success">
+                        <bill [interval]=1000 [player]=player [event]=event [tip]="tipPercentage"></bill>
+                    </h3>
                 </section>
             </accordion-group>
         </accordion>

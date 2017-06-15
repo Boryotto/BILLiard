@@ -35,6 +35,7 @@ export class BillViewComponent implements OnInit {
     private eventId: number;
     private event: GameEvent;
     private panelClass: string = classes.player_bill_panel;
+    private tipPercentage: number;
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -43,6 +44,8 @@ export class BillViewComponent implements OnInit {
         this.dataStorer.getGameEvent(this.eventId).then(resolvedEvent => this.event = resolvedEvent).catch(reason => {
             this.router.navigate(['/error'])
         });
+
+        this.tipPercentage = 0;
     }
 
 }
