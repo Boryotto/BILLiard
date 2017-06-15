@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MiscItem } from "../../models/misc-item.model";
 import { IDGeneratorService } from "../../services/storage/id-generator.service";
-import { config } from '../../config';
+import { config, classes } from '../../config';
 import { GameEvent } from "../../models/game-event.model";
 import { Player } from "../../models/player.model";
 import { Table } from "../../models/table.model";
@@ -27,6 +27,7 @@ export class EventFormComponent implements OnInit {
 
     private latestPlayerIdAdded: number;
     private latestTableIdAdded: number;
+    private panelClass: string = classes.player_bill_panel;
 
     onSubmit() {
         this.model.start = new Date();

@@ -22,8 +22,8 @@
         <div class="fixed-height-list list-group">
             <a class="list-group-item" (click)="addNewPlayer()">+ Add a new player</a>
         </div>
-        <accordion [closeOthers]="true">
-            <accordion-group *ngFor="let player of model.players" #group [isOpen]="latestPlayerIdAdded === player.Id">
+        <accordion>
+            <accordion-group *ngFor="let player of model.players" #group [isOpen]="latestPlayerIdAdded === player.Id" [panelClass]="panelClass">
                 <div accordion-heading>
                     <button type="button" class="close pull-right remove-list-item" (click)="removePlayer(player)" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -47,8 +47,8 @@
         <div class="fixed-height-list list-group">
             <a class="list-group-item" (click)="addNewTable()">+ Add a new table</a>
         </div>
-        <accordion [closeOthers]="true">
-            <accordion-group *ngFor="let table of model.tables" #group [isOpen]="latestTableIdAdded === table.Id">
+        <accordion>
+            <accordion-group *ngFor="let table of model.tables" #group [isOpen]="latestTableIdAdded === table.Id" [panelClass]="panelClass">
                 <div accordion-heading>
                     <button type="button" class="close pull-right remove-list-item" (click)="removeTable(table)" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
